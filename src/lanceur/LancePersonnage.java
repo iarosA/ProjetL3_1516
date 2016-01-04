@@ -35,6 +35,8 @@ public class LancePersonnage {
 		// si negatif, illimite
 		int nbTours = Constantes.NB_TOURS_PERSONNAGE_DEFAUT;
 		
+		int i_persoArgs = 0;
+		
 		// init des arguments
 		int port = Constantes.PORT_DEFAUT;
 		String ipArene = Constantes.IP_DEFAUT;
@@ -44,7 +46,7 @@ public class LancePersonnage {
 				ErreurLancement.aide(usage);
 			}
 			
-			if (args.length > 2) {
+			if (args.length > 3) {
 				ErreurLancement.TROP_ARGS.erreur(usage);
 			}
 			
@@ -56,9 +58,18 @@ public class LancePersonnage {
 				}
 			
 				if (args.length > 1) {
-					ipArene = args[1];
+					if (!FenetreLanceurLocal.existeClassePerso(args[1]))
+						ipArene = args[1];
+					else i_persoArgs = 1;
+				}
+				if (args.length > 2) {
+					i_persoArgs = 2;
 				}
 			}
+		}
+		else {
+			System.out.println("Veuillez préciser au moins le type de personnage à lancer.");
+			System.exit(0);
 		}
 		
 		// creation du logger
@@ -84,27 +95,27 @@ public class LancePersonnage {
 			
 			Point position = Calculs.positionAleatoireArene();
 			
-			if (args[0].equals("Assassin")) {
+			if (args[i_persoArgs].equals("Assassin")) {
 				new StrategieAssassin(ipArene, port, ipConsole, "Assassin", groupe, caracts, nbTours, position, logger);
 				logger.info("Lanceur", "Creation du personnage reussie");
 			}
-			else if (args[0].equals("Brute")) {
+			else if (args[i_persoArgs].equals("Brute")) {
 				new StrategieBrute(ipArene, port, ipConsole, "Brute", groupe, caracts, nbTours, position, logger);
 				logger.info("Lanceur", "Creation du personnage reussie");
 			}
-			else if (args[0].equals("Cavalier")) {
+			else if (args[i_persoArgs].equals("Cavalier")) {
 				new StrategieCavalier(ipArene, port, ipConsole, "Cavalier", groupe, caracts, nbTours, position, logger);
 				logger.info("Lanceur", "Creation du personnage reussie");
 			}
-			else if (args[0].equals("Grenadier")) {
+			else if (args[i_persoArgs].equals("Grenadier")) {
 				new StrategieGrenadier(ipArene, port, ipConsole, "Grenadier", groupe, caracts, nbTours, position, logger);
 				logger.info("Lanceur", "Creation du personnage reussie");
 			}
-			else if (args[0].equals("Sniper")) {
+			else if (args[i_persoArgs].equals("Sniper")) {
 				new StrategieSniper(ipArene, port, ipConsole, "Sniper", groupe, caracts, nbTours, position, logger);
 				logger.info("Lanceur", "Creation du personnage reussie");
 			}
-			else {
+			else if (args[i_persoArgs].equals("Personnage")){
 				new StrategiePersonnage(ipArene, port, ipConsole, "Pesonnage", groupe, caracts, nbTours, position, logger);
 				logger.info("Lanceur", "Creation du personnage reussie");
 			}
