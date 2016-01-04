@@ -1,6 +1,5 @@
 package client.controle.strategies;
 
-
 import java.awt.Point;
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -11,14 +10,11 @@ import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
 import serveur.element.Potion;
-import serveur.element.personnages.Personnage;
+import serveur.element.personnages.Brute;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
-/**
- * Strategie d'un personnage. 
- */
-public class StrategiePersonnage implements IStrategie{
+public class StrategieBrute implements IStrategie{
 	
 	/**
 	 * Console permettant d'ajouter une phrase et de recuperer le serveur 
@@ -37,7 +33,7 @@ public class StrategiePersonnage implements IStrategie{
 	 * @param position position initiale du personnage dans l'arene
 	 * @param logger gestionnaire de log
 	 */
-	public StrategiePersonnage(String ipArene, int port, String ipConsole, 
+	public StrategieBrute(String ipArene, int port, String ipConsole, 
 			String nom, String groupe, HashMap<Caracteristique, Integer> caracts,
 			int nbTours, Point position, LoggerProjet logger) {
 		
@@ -45,7 +41,7 @@ public class StrategiePersonnage implements IStrategie{
 		
 		try {
 			console = new Console(ipArene, port, ipConsole, this, 
-					new Personnage(nom, groupe, caracts), 
+					new Brute(nom, groupe, caracts), 
 					nbTours, position, logger);
 			logger.info("Lanceur", "Creation de la console reussie");
 			
@@ -54,8 +50,6 @@ public class StrategiePersonnage implements IStrategie{
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	// TODO etablir une strategie afin d'evoluer dans l'arene de combat
 	// une proposition de strategie (simple) est donnee ci-dessous
@@ -65,9 +59,6 @@ public class StrategiePersonnage implements IStrategie{
 	 * de Arene et de ConsolePersonnage. 
 	 * @param voisins element voisins de cet element (elements qu'il voit)
 	 * @throws RemoteException
-	 */	/**
-	 * Console permettant d'ajouter une phrase et de recuperer le serveur 
-	 * (l'arene).
 	 */
 	public void executeStrategie(HashMap<Integer, Point> voisins) throws RemoteException {
 		// arene
@@ -117,5 +108,4 @@ public class StrategiePersonnage implements IStrategie{
 		}
 	}
 
-	
 }
