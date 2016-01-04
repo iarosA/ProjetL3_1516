@@ -3,7 +3,7 @@ package serveur.vuelement;
 import java.awt.Color;
 import java.awt.Point;
 
-import serveur.element.Personnage;
+import serveur.element.personnages.Personnage;
 import utilitaires.Constantes;
 
 /**

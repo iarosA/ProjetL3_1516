@@ -1,10 +1,12 @@
 /**
  * 
  */
-package serveur.element;
+package serveur.element.personnages;
 
 import java.util.HashMap;
 
+import serveur.element.Caracteristique;
+import serveur.element.Element;
 import utilitaires.Calculs;
 
 /**
