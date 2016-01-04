@@ -22,7 +22,9 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	
 	private JPanel panel = new JPanel(); //panel principal
 	
-	private String s_perso = new String("Personnage"); //personnage selectionné
+	public static String[] classesPerso = {"Personnage", "Assassin", "Brute", "Cavalier", "Grenadier", "Sniper"};
+	
+	private int i_perso = 0; //personnage selectionné
 	private String s_potion = new String("Potion"); //potion selectionnée
 	private String message = new String(""); //message d'information
 	
@@ -80,8 +82,19 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		this.panel.setBackground(Color.white);
 		
 		//  Lancement Persos  \\
-		this.persoLabel = new JLabel(this.s_perso, JLabel.CENTER);
-		this.persoLabel.setPreferredSize(new Dimension(100, 50));	
+		this.persoLabel = new JLabel(classesPerso[this.i_perso], JLabel.CENTER);
+		this.persoLabel.setPreferredSize(new Dimension(100, 50));
+		//Visibilité des bouttons
+		if (this.i_perso == 0) {
+			this.persoM.setEnabled(false);
+		}
+		else if (this.i_perso == classesPerso.length - 1) {
+			this.persoP.setEnabled(false);
+		}
+		else {
+			this.persoM.setEnabled(true);
+			this.persoP.setEnabled(true);
+		}
 		//Panel
 		JPanel persoPanel = new JPanel();
 		persoPanel.add(this.persoM);
@@ -134,11 +147,11 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if (source == this.persoM) {
-			
+			this.i_perso--;
 		}
 		////////////////////////////
 		else if (source == this.persoP) {
-			
+			this.i_perso++;
 		}
 		////////////////////////////
 		else if (source == this.launchPerso) {
@@ -146,9 +159,9 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 				this.message = "Lancez d'abord l'arene et l'IHM..";
 			}
 			else {
-				Thread persoThread = new ThreadPerso();
+				Thread persoThread = new ThreadPerso(classesPerso[this.i_perso]);
 				persoThread.start();
-				this.message = "Personnage déployé.";
+				this.message = classesPerso[this.i_perso] + " déployé.";
 			}
 		}
 		////////////////////////////
@@ -178,7 +191,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 				this.areneThread.start();
 				try {
 					//on attend pour être sûr que l'arène s'est lancée
-					Thread.sleep(100);
+					Thread.sleep(500);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -209,14 +222,30 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		}
 	}
 	private class ThreadPerso extends Thread {
+		private String classePerso;
+		
+		public ThreadPerso(String classePerso) {
+			super();
+			this.classePerso = classePerso;
+		}
+		
 		public void run() {
-			LancePersonnage.main(new String[0]);
+			String[] args = new String[1];
+			args[0] = this.classePerso;
+			LancePersonnage.main(args);
 		}
 	}
 	private class ThreadPotion extends Thread {
 		public void run() {
 			LancePotion.main(new String[0]);
 		}
+	}
+	
+	public static boolean existeClassePerso(String nom) {
+		for (String s : classesPerso) {
+			if (s.equals(nom)) return true;
+		}
+		return false;
 	}
 	
 	

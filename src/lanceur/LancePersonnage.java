@@ -5,7 +5,12 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.HashMap;
 
+import client.controle.strategies.StrategieAssassin;
+import client.controle.strategies.StrategieBrute;
+import client.controle.strategies.StrategieCavalier;
+import client.controle.strategies.StrategieGrenadier;
 import client.controle.strategies.StrategiePersonnage;
+import client.controle.strategies.StrategieSniper;
 import logger.LoggerProjet;
 import serveur.element.Caracteristique;
 import utilitaires.Calculs;
@@ -20,10 +25,10 @@ public class LancePersonnage {
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
 
 	public static void main(String[] args) {
-		String nom = "Truc";
+		String nom = "";
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
-		String groupe = "G" + Calculs.nombreAleatoire(0,99); 
+		String groupe = "G13"; 
 		
 		// nombre de tours pour ce personnage avant d'etre deconnecte 
 		// (30 minutes par defaut)
@@ -43,14 +48,16 @@ public class LancePersonnage {
 				ErreurLancement.TROP_ARGS.erreur(usage);
 			}
 			
-			try {
-				port = Integer.parseInt(args[0]);
-			} catch (NumberFormatException e) {
-				ErreurLancement.PORT_NAN.erreur(usage);
-			}
+			if (!FenetreLanceurLocal.existeClassePerso(args[0])) {
+				try {
+					port = Integer.parseInt(args[0]);
+				} catch (NumberFormatException e) {
+					ErreurLancement.PORT_NAN.erreur(usage);
+				}
 			
-			if (args.length > 1) {
-				ipArene = args[1];
+				if (args.length > 1) {
+					ipArene = args[1];
+				}
 			}
 		}
 		
@@ -77,8 +84,32 @@ public class LancePersonnage {
 			
 			Point position = Calculs.positionAleatoireArene();
 			
-			new StrategiePersonnage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);
-			logger.info("Lanceur", "Creation du personnage reussie");
+			if (args[0].equals("Assassin")) {
+				new StrategieAssassin(ipArene, port, ipConsole, "Assassin", groupe, caracts, nbTours, position, logger);
+				logger.info("Lanceur", "Creation du personnage reussie");
+			}
+			else if (args[0].equals("Brute")) {
+				new StrategieBrute(ipArene, port, ipConsole, "Brute", groupe, caracts, nbTours, position, logger);
+				logger.info("Lanceur", "Creation du personnage reussie");
+			}
+			else if (args[0].equals("Cavalier")) {
+				new StrategieCavalier(ipArene, port, ipConsole, "Cavalier", groupe, caracts, nbTours, position, logger);
+				logger.info("Lanceur", "Creation du personnage reussie");
+			}
+			else if (args[0].equals("Grenadier")) {
+				new StrategieGrenadier(ipArene, port, ipConsole, "Grenadier", groupe, caracts, nbTours, position, logger);
+				logger.info("Lanceur", "Creation du personnage reussie");
+			}
+			else if (args[0].equals("Sniper")) {
+				new StrategieSniper(ipArene, port, ipConsole, "Sniper", groupe, caracts, nbTours, position, logger);
+				logger.info("Lanceur", "Creation du personnage reussie");
+			}
+			else {
+				new StrategiePersonnage(ipArene, port, ipConsole, "Pesonnage", groupe, caracts, nbTours, position, logger);
+				logger.info("Lanceur", "Creation du personnage reussie");
+			}
+			
+			
 			
 		} catch (Exception e) {
 			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
