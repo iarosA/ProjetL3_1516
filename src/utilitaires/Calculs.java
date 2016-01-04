@@ -65,7 +65,7 @@ public class Calculs {
 	 * cible, ou null s'il n'en existe aucun
 	 */
 	public static Point meilleurPoint(Point origine, Point objectif, 
-			HashMap<Integer, Point> voisins) {
+			HashMap<Integer, Point> voisins, int distance) {
 		
 		// liste contenant tous les positions vers lesquelles l'element peut avancer :
 		// les 8 cases autour de lui
@@ -73,8 +73,8 @@ public class Calculs {
 		
 		Point tempPoint;
 		
-		for (int i = -1; i <= 1; i++) {
-			for (int j = -1; j <= 1; j++) {
+		for (int i = -distance; i <= distance; i++) {
+			for (int j = -distance; j <= distance; j++) {
 				if ((i != 0) || (j != 0))  { // pas le point lui-meme
 					tempPoint = new Point(origine.x + i, origine.y + j);
 					

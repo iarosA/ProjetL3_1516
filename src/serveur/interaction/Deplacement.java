@@ -46,7 +46,7 @@ public class Deplacement {
 	 * sinon il va vers le voisin correspondant (s'il existe dans les voisins).
 	 * @param refObjectif reference de l'element cible
 	 */    
-	public void seDirigeVers(int refObjectif) throws RemoteException {
+	public void seDirigeVers(int refObjectif, int distance) throws RemoteException {
 		Point pvers;
 
 		// on ne bouge que si la reference n'est pas la notre
@@ -65,7 +65,7 @@ public class Deplacement {
 	
 			// on ne bouge que si l'element existe
 			if(pvers != null) {
-				seDirigeVers(pvers);
+				seDirigeVers(pvers, distance);
 			}
 		}
 	}
@@ -75,11 +75,11 @@ public class Deplacement {
 	 * @param objectif case cible
 	 * @throws RemoteException
 	 */
-	public void seDirigeVers(Point objectif) throws RemoteException {
+	public void seDirigeVers(Point objectif, int distance) throws RemoteException {
 		Point cible = Calculs.restreintPositionArene(objectif); 
 		
 		// on cherche le point voisin vide
-		Point dest = Calculs.meilleurPoint(personnage.getPosition(), cible, voisins);
+		Point dest = Calculs.meilleurPoint(personnage.getPosition(), cible, voisins, distance);
 		
 		if(dest != null) {
 			personnage.setPosition(dest);

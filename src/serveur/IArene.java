@@ -187,7 +187,7 @@ public interface IArene extends Remote {
 	 * @return vrai si l'action a bien eu lieu, faux sinon
 	 * @throws RemoteException
 	 */
-	public boolean deplace(int refRMI, int refCible) throws RemoteException;
+	public boolean deplace(int refRMI, int refCible, int distance) throws RemoteException;
 	
 	/**
 	 * Deplace le personnage correspondant a la console donne vers le point 
@@ -199,7 +199,7 @@ public interface IArene extends Remote {
 	 * @return vrai si l'action a bien eu lieu, faux sinon
 	 * @throws RemoteException
 	 */
-	public boolean deplace(int refRMI, Point objectif) throws RemoteException;
+	public boolean deplace(int refRMI, Point objectif, int distance) throws RemoteException;
 	
 	
 
