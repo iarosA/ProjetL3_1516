@@ -22,7 +22,7 @@ import utilitaires.Constantes;
  */
 public class LancePersonnage {
 	
-	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
+	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ] typePersonnage";
 
 	public static void main(String[] args) {
 		String nom = "";
