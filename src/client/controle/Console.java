@@ -7,10 +7,11 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.logging.Level;
 
-import client.StrategiePersonnage;
+import client.controle.strategies.IStrategie;
+import client.controle.strategies.StrategiePersonnage;
 import logger.LoggerProjet;
 import serveur.IArene;
-import serveur.element.Personnage;
+import serveur.element.personnages.Personnage;
 import utilitaires.Constantes;
 
 /**
@@ -50,7 +51,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 	/**
 	 * Strategie jouee par l'element correspondant. 
 	 */
-	private final StrategiePersonnage strategiePer;
+	private final IStrategie strategiePer;
 
 	/**
 	 * Gestionnaire de log.
@@ -70,7 +71,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 	 * @throws RemoteException
 	 */
 	public Console(String ipArene, int port, String ipConsole,
-			StrategiePersonnage strategiePer, Personnage pers, int nbTours, 
+			IStrategie strategiePer, Personnage pers, int nbTours, 
 			Point position, LoggerProjet logger) throws RemoteException {
 		
 		super();
@@ -167,7 +168,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 	}
 
 	@Override
-	public StrategiePersonnage getStrategiePers() throws RemoteException {
+	public IStrategie getStrategiePers() throws RemoteException {
 		return strategiePer;
 	}
 

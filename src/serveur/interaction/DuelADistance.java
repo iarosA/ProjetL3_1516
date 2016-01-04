@@ -5,7 +5,7 @@ import java.util.logging.Level;
 
 import serveur.Arene;
 import serveur.element.Caracteristique;
-import serveur.element.Personnage;
+import serveur.element.personnages.Personnage;
 import serveur.vuelement.VuePersonnage;
 import utilitaires.Constantes;
 

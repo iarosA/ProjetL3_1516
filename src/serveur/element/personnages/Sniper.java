@@ -1,6 +1,8 @@
-package serveur.element;
+package serveur.element.personnages;
 
 import java.util.HashMap;
+
+import serveur.element.Caracteristique;
 
 public class Sniper extends Personnage {
 	
