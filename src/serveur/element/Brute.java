@@ -19,5 +19,6 @@ public class Brute extends Personnage {
 			this.caracts.put(Caracteristique.VIE, 100);
 			this.caracts.put(Caracteristique.FORCE, 80);
 			this.caracts.put(Caracteristique.INITIATIVE, 20);
+			this.caracts.put(Caracteristique.DEFENSE, 80);
 		}
 	}
