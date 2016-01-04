@@ -34,7 +34,7 @@ public class Duel extends Interaction<VuePersonnage> {
 			int forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
 			Personnage pDefenseur = defenseur.getElement();
 			int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);
-			int perteVie = forceAttaquant*(100-defenseDefenseur)/100;
+			int perteVie = forceAttaquant * (100 - defenseDefenseur) / 100;
 		
 			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
 

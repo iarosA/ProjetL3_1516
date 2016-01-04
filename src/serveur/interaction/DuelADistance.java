@@ -29,14 +29,14 @@ public class DuelADistance extends Interaction<VuePersonnage>{
 			Personnage pDefenseur = defenseur.getElement();
 			int forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
 			int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);
-			int perteVie = forceAttaquant*(100-defenseDefenseur)/100;
+			int perteVie = forceAttaquant * (100 - defenseDefenseur) / 100;
 		
 			
 			// degats
 			if (perteVie > 0) {
 				arene.incrementeCaractElement(defenseur, Caracteristique.VIE, -perteVie);
 				
-				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " colle une beigne ("
+				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " dégomme à distance ("
 						+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
 			}
 			
@@ -70,15 +70,5 @@ public class DuelADistance extends Interaction<VuePersonnage>{
 		arene.incrementeCaractElement(attaquant, Caracteristique.INITIATIVE, 
 				-Constantes.INCR_DECR_INITIATIVE_DUEL);
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
