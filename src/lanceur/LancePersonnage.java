@@ -75,7 +75,7 @@ public class LancePersonnage {
 		// creation du logger
 		LoggerProjet logger = null;
 		try {
-			logger = new LoggerProjet(true, "personnage_" + nom + groupe);
+			logger = new LoggerProjet(true, "personnage_" + args[i_persoArgs] + "_" + groupe);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(ErreurLancement.suivant);
@@ -85,7 +85,7 @@ public class LancePersonnage {
 		try {
 			String ipConsole = InetAddress.getLocalHost().getHostAddress();
 			
-			logger.info("Lanceur", "Creation du personnage...");
+			logger.info("Lanceur", "Creation d'un/une" + args[i_persoArgs] + "...");
 			
 			// caracteristiques du personnage
 			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();

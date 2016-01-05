@@ -190,8 +190,8 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 				this.areneThread = new ThreadArene();
 				this.areneThread.start();
 				try {
-					//on attend pour être sûr que l'arène s'est lancée
-					Thread.sleep(500);
+					//on attend 1 sec pour être sûr que l'arène s'est lancée
+					Thread.sleep(1000);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -199,6 +199,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 				this.IHMThread = new ThreadIHM();
 				this.IHMThread.start();
 				this.estLance = true;
+				this.message = "Arène et IHM lancés.";
 			}
 			else {
 				//sinon on quitte tout
