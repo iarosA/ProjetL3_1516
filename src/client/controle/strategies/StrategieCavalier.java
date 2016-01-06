@@ -56,7 +56,9 @@ public class StrategieCavalier implements IStrategie{
 	 * Decrit la strategie.
 	 * Les methodes pour evoluer dans le jeu doivent etre les methodes RMI
 	 * de Arene et de ConsolePersonnage. 
+	 * 
 	 * Le cavalier se deplace plus vite, tape au corps a corps ou a moyenne distance
+	 * 
 	 * @param voisins element voisins de cet element (elements qu'il voit)
 	 * @throws RemoteException
 	 */
