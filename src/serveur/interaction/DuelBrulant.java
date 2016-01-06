@@ -11,7 +11,8 @@ import utilitaires.Constantes;
 
 /**
  * Represente un duel entre deux personnages.
- *
+ * la victime est brulée pendant NB_TOURS_BRULURE
+ * les degats seront de EFFET_BRULURE points par tour
  */
 public class DuelBrulant extends Interaction<VuePersonnage> {
 	
@@ -27,7 +28,6 @@ public class DuelBrulant extends Interaction<VuePersonnage> {
 	
 	
 	@Override
-	//TODO
 	/**
 	 * 
 	 * 
@@ -60,7 +60,6 @@ public class DuelBrulant extends Interaction<VuePersonnage> {
 	}
 		
 	
-	//TODO
 	/**
 	 * 
 	 * @param defenseur
