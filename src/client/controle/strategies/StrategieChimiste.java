@@ -3,20 +3,17 @@ package client.controle.strategies;
 import java.awt.Point;
 import java.rmi.RemoteException;
 import java.util.HashMap;
-import java.util.Hashtable;
 
 import client.controle.Console;
 import logger.LoggerProjet;
 import serveur.IArene;
 import serveur.element.Caracteristique;
-import serveur.element.Element;
 import serveur.element.personnages.Chimiste;
-import serveur.element.personnages.Personnage;
-import serveur.element.potions.Potion;
+import serveur.element.potions.PotionParalysie;
 import serveur.element.potions.PotionPoison;
+import serveur.element.potions.PotionTeleportation;
 import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
-import utilitaires.Constantes;
 
 public class StrategieChimiste implements IStrategie{
 	
@@ -84,7 +81,7 @@ public class StrategieChimiste implements IStrategie{
 		VuePersonnage moi = (VuePersonnage) arene.vueFromRef(refRMI);
 		arene.setActionExecutee(moi, false);
 		
-		int choixPotion = Calculs.nombreAleatoire(1, 2);
+		int choixPotion = Calculs.nombreAleatoire(1, 3);
 		
 		switch(choixPotion){
 		case 1:
@@ -94,6 +91,10 @@ public class StrategieChimiste implements IStrategie{
 		case 2:
 			console.setPhrase("Je depose une potion de paralysie");
 			arene.ajoutePotion(new PotionParalysie("Potion de Paralysie", "G13", new HashMap<Caracteristique, Integer>()), arene.getPosition(refRMI));
+			break;
+		case 3:
+			console.setPhrase("Je depose une potion de teleportation");
+			arene.ajoutePotion(new PotionTeleportation("Potion de Teleportation", "G13", new HashMap<Caracteristique, Integer>()), arene.getPosition(refRMI));
 			break;
 		}
 		arene.subirBrulure(refRMI);
