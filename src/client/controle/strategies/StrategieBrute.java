@@ -123,12 +123,6 @@ public class StrategieBrute implements IStrategie{
 								console.setPhrase("Je marave " + elemPlusProche.getNom());
 								arene.lanceAttaque(refRMI, refCible, true);
 							}
-						}
-					} else if (this.nbTours_paralysie == 0) {
-						if (elemPlusProche instanceof Personnage) {
-							this.nbTours_paralysie = 1;
-							console.setPhrase("Je paralyse " + elemPlusProche.getNom());
-							arene.lanceAttaqueParalysante(refRMI, refCible);//attaque paralysante
 						}	
 					} else { // si voisins, mais plus eloignes
 						// je vais vers le plus proche
