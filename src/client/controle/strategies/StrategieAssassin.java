@@ -10,9 +10,12 @@ import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
 import serveur.element.personnages.Assassin;
+import serveur.element.personnages.Personnage;
 import serveur.element.potions.Potion;
+import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
+
 
 public class StrategieAssassin implements IStrategie{
 	
@@ -21,7 +24,7 @@ public class StrategieAssassin implements IStrategie{
 	 * (l'arene).
 	 */
 	protected Console console;
-
+	protected int nbTours_Teleport=0;
 	/**
 	 * Cree un personnage, la console associe et sa strategie.
 	 * @param ipArene ip de communication avec l'arene
@@ -50,10 +53,10 @@ public class StrategieAssassin implements IStrategie{
 			e.printStackTrace();
 		}
 	}
-
-	// TODO etablir une strategie afin d'evoluer dans l'arene de combat
-	// une proposition de strategie (simple) est donnee ci-dessous
-	/** 
+	
+	/** L'assassin peut se teleporter DANS LE DOS de ses adversaires une fois tous les 5 tours et les attaquer
+	 * sans prendre en compte leur defense, sinon il avance de 1 et l'attaque prend en compte la Defense.
+	 * 
 	 * Decrit la strategie.
 	 * Les methodes pour evoluer dans le jeu doivent etre les methodes RMI
 	 * de Arene et de ConsolePersonnage. 
@@ -87,24 +90,48 @@ public class StrategieAssassin implements IStrategie{
 
 			Element elemPlusProche = arene.elementFromRef(refCible);
 
-			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
+			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION ) { // si suffisamment proches
 				// j'interagis directement
 				if(elemPlusProche instanceof Potion) { // potion
-					// ramassage
+														// ramassage
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);
 
 				} else { // personnage
-					// duel
-					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible, true);
-				}
+						// duel
+					
+						console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
+						arene.lanceAttaque(refRMI, refCible, true);
+					}
 				
 			} else { // si voisins, mais plus eloignes
 				// je vais vers le plus proche
-				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
-				arene.deplace(refRMI, refCible, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT));
+				if(nbTours_Teleport==0 && elemPlusProche instanceof Personnage)
+				{
+					console.setPhrase("Je me deplace furtivement dans le dos de" + elemPlusProche.getNom());
+					arene.teleport(refRMI, refCible);
+					this.nbTours_Teleport = 1;
+					VuePersonnage moi = (VuePersonnage)arene.vueFromRef(refRMI);
+					arene.setActionExecutee(moi, false);
+					console.setPhrase("J'attaque furtivement " + elemPlusProche.getNom());
+					arene.lanceAttaque(refRMI, refCible, false);
+					
+					
+				}
+				else
+				{
+					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+					arene.deplace(refRMI, refCible, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT));
+				}
+				
 			}
+		}
+		if(nbTours_Teleport > 0)
+		{
+			if(nbTours_Teleport==5)
+				nbTours_Teleport = 0;
+			else
+				nbTours_Teleport++;
 		}
 		arene.subirBrulure(refRMI);
 		arene.subirParalysie(refRMI);

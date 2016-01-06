@@ -266,5 +266,7 @@ public interface IArene extends Remote {
 	void invincibilite(VuePersonnage vuePersonnage) throws RemoteException;
 
 	void deplacemenAccru(VuePersonnage vuePersonnage) throws RemoteException;
+
+	void setActionExecutee(VuePersonnage vueP, boolean b);
 }
 

@@ -1236,7 +1236,14 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	public LoggerProjet getLogger() {
 		return logger;
 	}
-
+	
+	@Override
+	public void setActionExecutee(VuePersonnage vueP, boolean b)
+	{
+		vueP.setActionExecutee(b);
+	}
+	
+	
 	/**
 	 * Ajoute une ligne au log d'un client.
 	 * @param vueElement vue du client
