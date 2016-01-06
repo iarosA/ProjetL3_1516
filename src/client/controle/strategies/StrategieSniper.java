@@ -9,6 +9,7 @@ import logger.LoggerProjet;
 import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
+import serveur.element.personnages.Personnage;
 import serveur.element.personnages.Sniper;
 import serveur.element.potions.Potion;
 import utilitaires.Calculs;
@@ -21,6 +22,8 @@ public class StrategieSniper implements IStrategie{
 	 * (l'arene).
 	 */
 	protected Console console;
+	
+	protected int nbTours_snipe = 0; //compteur capacite speciale snipe
 
 	/**
 	 * Cree un personnage, la console associe et sa strategie.
@@ -56,7 +59,9 @@ public class StrategieSniper implements IStrategie{
 	/** 
 	 * Decrit la strategie.
 	 * Les methodes pour evoluer dans le jeu doivent etre les methodes RMI
-	 * de Arene et de ConsolePersonnage. 
+	 * de Arene et de ConsolePersonnage.
+	 * - peut sniper (attaque a distance qui prend pas en compte la def dans le champ de vision) tous les 5 tours
+	 * - attaque au corps a corps (duel) sinon
 	 * @param voisins element voisins de cet element (elements qu'il voit)
 	 * @throws RemoteException
 	 */
@@ -95,16 +100,35 @@ public class StrategieSniper implements IStrategie{
 					arene.ramassePotion(refRMI, refCible);
 
 				} else { // personnage
-					// duel
-					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible, true);
+					if (this.nbTours_snipe == 0) {
+						this.nbTours_snipe = 1;
+						console.setPhrase("Je snipe " + elemPlusProche.getNom());
+						arene.lanceAttaqueADist(refRMI, refCible, false);//attaque transpercante
+					}
+					else {
+						// duel
+						console.setPhrase("Je fais un duel au couteau avec " + elemPlusProche.getNom());
+						arene.lanceAttaque(refRMI, refCible, true);
+					}
 				}
-				
+			} else if (this.nbTours_snipe == 0) {
+				if (elemPlusProche instanceof Personnage) {
+					this.nbTours_snipe = 1;
+					console.setPhrase("Je snipe " + elemPlusProche.getNom());
+					arene.lanceAttaqueADist(refRMI, refCible, false);//attaque transpercante
+				}	
 			} else { // si voisins, mais plus eloignes
 				// je vais vers le plus proche
 				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 				arene.deplace(refRMI, refCible, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT));
 			}
+		}
+		if (this.nbTours_snipe > 0) {
+			if (this.nbTours_snipe == 5) {
+				this.nbTours_snipe = 0;
+				console.setPhrase("Je peux sniper a nouveau");
+			}
+			else this.nbTours_snipe++;
 		}
 		arene.subirBrulure(refRMI);
 		arene.subirParalysie(refRMI);
