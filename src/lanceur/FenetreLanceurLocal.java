@@ -27,7 +27,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 
 	private JPanel panel = new JPanel(); //panel principal
 	
-	public static String[] classesPerso = {"Personnage", "Assassin", "Brute", "Cavalier", "Grenadier", "Sniper"};
+	public static String[] classesPerso = {"Personnage", "Assassin", "Brute", "Cavalier", "Chimiste", "Grenadier", "Sniper"};
 	
 	private int i_perso = 0; //personnage selectionné
 	private String s_potion = new String("Potion"); //potion selectionnée
