@@ -33,11 +33,18 @@ public class DuelADistance extends Interaction<VuePersonnage>{
 			Personnage pDefenseur = defenseur.getElement();
 			int forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
 			int perteVie;
+			int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);
 			if (avecDef) {
-				int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);
 				perteVie = forceAttaquant * (100 - defenseDefenseur) / 100;
 			}
-			else perteVie = forceAttaquant;
+			else {
+				if(defenseDefenseur == 100) {
+					perteVie = 0;
+				}
+				else {
+				perteVie = forceAttaquant;
+				}
+			}
 		
 			
 			// degats
