@@ -86,7 +86,8 @@ public class StrategieGrenadier implements IStrategie{
 			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
 
 			Element elemPlusProche = arene.elementFromRef(refCible);
-
+			
+			//si le grenadier est a proximite d'une potion, il la ramasse
 			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
 				// j'interagis directement
 				if(elemPlusProche instanceof Potion) { // potion
@@ -94,12 +95,23 @@ public class StrategieGrenadier implements IStrategie{
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);
 
-				} else { // personnage
-					// duel
-					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible, true);
 				}
 				
+			//si le grenadier est a 3 fois la distance minimale d'interaction, il lance une attaque brulante
+			} 
+			else if(distPlusProche <= 3*Constantes.DISTANCE_MIN_INTERACTION){ // personnage
+				// duel
+				console.setPhrase("Je brule " + elemPlusProche.getNom());
+				arene.lanceAttaqueBrulante(refRMI, refCible);
+			}
+			
+			//sinon, si le grenadier est a 5 fois la distance minimale d'interaction, il lance une attaque a distance
+			else if(distPlusProche <= 5*Constantes.DISTANCE_MIN_INTERACTION){ // personnage
+				// duel
+				console.setPhrase("J'attaque " + elemPlusProche.getNom()+" a distance");
+				arene.lanceAttaqueADist(refRMI, refCible, true);
+				
+			//sinon, il se deplace vers un voisin
 			} else { // si voisins, mais plus eloignes
 				// je vais vers le plus proche
 				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
