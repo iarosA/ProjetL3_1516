@@ -127,16 +127,35 @@ public class Constantes {
 		return "("+ nomClasse(client) + client.getRefRMI() + " * " + client.getElement().getNomGroupe() + ")";
 	}
 	
+	/**
+	 * Nombre de tours pendant lesquels le personnage est invulnerable
+	 */
 	public static int NB_TOURS_INVINCIBILITE = 10;	
 	
+	/**
+	 * Nombre de tours pendant lesquels le personnage se deplace plus vite
+	 */
 	public static int NB_TOURS_DEPLACEMENT_ACCRU = 10;
 	
+	/**
+	 * l'etendue du deplacement en nombre de cases
+	 */
 	public static int EFFET_DEPLACEMENT_ACCRU = 2;
 	
+	/**
+	 * Nombre de tours pendant lesquels le personnage est paralysé, il peut quand meme etre ejecte
+	 */
 	public static int NB_TOURS_PARALYSIE = 5;
 	
+	/**
+	 * Nombre de tours pendant lesquels le personnage est sous l'effet d'une brulure
+	 * il perd EFFET_BRULURE points de vie a chaque tour sauf s'il est invulnerable
+	 */
 	public static int NB_TOURS_BRULURE = 10;
 	
+	/**
+	 * Le nombre de points de vie que la brulure enleve au personnage affecte par tour
+	 */
 	public static int EFFET_BRULURE = -2;
 
 
