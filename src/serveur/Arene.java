@@ -997,7 +997,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	@Override
 	public boolean deplace(int refRMI, int refCible, int distance) throws RemoteException {		
 		boolean res = false;
-		
+
 		VuePersonnage client = personnages.get(refRMI);
 		
 		if (client.isActionExecutee()) {
@@ -1010,6 +1010,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 			client.executeAction();
 			
 			res = true;
+			
 		}
 		
 		return res;
@@ -1047,6 +1048,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		} else {
 			// sinon, on tente de jouer l'interaction
 			new Deplacement(client, getVoisins(refRMI)).seDirigeVers(objectif, distance);
+			client.executeAction();
 
 			res = true;
 		}
@@ -1067,7 +1069,6 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		} else {
 			// sinon, on tente de jouer l'interaction
 			new Deplacement(client, getVoisins(refRMI)).seTeleporteVers(objectif);
-			client.executeAction();
 			
 			res = true;
 		}

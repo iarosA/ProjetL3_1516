@@ -111,12 +111,12 @@ public class StrategieSniper implements IStrategie{
 						arene.lanceAttaque(refRMI, refCible, true);
 					}
 				}
-			} else if (this.nbTours_snipe == 0) {
-				if (elemPlusProche instanceof Personnage) {
-					this.nbTours_snipe = 1;
-					console.setPhrase("Je snipe " + elemPlusProche.getNom());
-					arene.lanceAttaqueADist(refRMI, refCible, false);//attaque transpercante
-				}	
+			} else if (this.nbTours_snipe == 0 && elemPlusProche instanceof Personnage) {
+
+				this.nbTours_snipe = 1;
+				console.setPhrase("Je snipe " + elemPlusProche.getNom());
+				arene.lanceAttaqueADist(refRMI, refCible, false);//attaque transpercante
+					
 			} else { // si voisins, mais plus eloignes
 				// je vais vers le plus proche
 				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());

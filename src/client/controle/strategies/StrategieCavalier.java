@@ -103,20 +103,18 @@ public class StrategieCavalier implements IStrategie{
 				}
 				
 			}
-			else if (distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION * 3) { // si suffisamment proches
-				// j'interagis directement
-				if (elemPlusProche instanceof Personnage) 
-				{ 
-					// personnage
-					// duel a distance a l'arc
-					console.setPhrase("Je sors mon arc et je vise " + elemPlusProche.getNom());
-					arene.lanceAttaqueADist(refRMI, refCible, true);
-				} 
+			else if (distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION * 3 && elemPlusProche instanceof Personnage) { // si suffisamment proches
+				
+				// personnage
+				// duel a distance a l'arc
+				console.setPhrase("Je sors mon arc et je vise " + elemPlusProche.getNom());
+				arene.lanceAttaqueADist(refRMI, refCible, true);
 				
 			} else { // si voisins, mais plus eloignes
 				// je vais vers le plus proche
 				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 				arene.deplace(refRMI, refCible, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT));
+
 			}
 		}
 		arene.subirBrulure(refRMI);
