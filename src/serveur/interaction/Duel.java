@@ -17,14 +17,16 @@ import utilitaires.Constantes;
  */
 public class Duel extends Interaction<VuePersonnage> {
 	
+	protected boolean avecDef;
 	/**
 	 * Cree une interaction de duel.
 	 * @param arene arene
 	 * @param attaquant attaquant
 	 * @param defenseur defenseur
 	 */
-	public Duel(Arene arene, VuePersonnage attaquant, VuePersonnage defenseur) {
+	public Duel(Arene arene, VuePersonnage attaquant, VuePersonnage defenseur, boolean def) {
 		super(arene, attaquant, defenseur);
+		this.avecDef = def;
 	}
 	
 	@Override
@@ -33,8 +35,12 @@ public class Duel extends Interaction<VuePersonnage> {
 			Personnage pAttaquant = attaquant.getElement();
 			int forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
 			Personnage pDefenseur = defenseur.getElement();
-			int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);
-			int perteVie = forceAttaquant * (100 - defenseDefenseur) / 100;
+			int perteVie;
+			if (avecDef) {
+				int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);
+				perteVie = forceAttaquant * (100 - defenseDefenseur) / 100;
+			}
+			else perteVie = forceAttaquant;
 		
 			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
 

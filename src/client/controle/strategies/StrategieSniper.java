@@ -97,7 +97,7 @@ public class StrategieSniper implements IStrategie{
 				} else { // personnage
 					// duel
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible);
+					arene.lanceAttaque(refRMI, refCible, true);
 				}
 				
 			} else { // si voisins, mais plus eloignes

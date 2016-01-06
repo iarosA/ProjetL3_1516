@@ -11,15 +11,19 @@ import utilitaires.Constantes;
 
 public class DuelADistance extends Interaction<VuePersonnage>{
 	
+	
+	private boolean avecDef;
 	/**
 	 * Cree une interaction de duel.
 	 * @param arene arene
 	 * @param attaquant attaquant
 	 * @param defenseur defenseur
+	 * @param def true-> prends en compte defense, false-> non
 	 */
 	
-	public DuelADistance(Arene arene, VuePersonnage attaquant, VuePersonnage defenseur) {
+	public DuelADistance(Arene arene, VuePersonnage attaquant, VuePersonnage defenseur, boolean def) {
 		super(arene, attaquant, defenseur);
+		this.avecDef = def;
 	}
 	
 	@Override
@@ -28,8 +32,12 @@ public class DuelADistance extends Interaction<VuePersonnage>{
 			Personnage pAttaquant = attaquant.getElement();
 			Personnage pDefenseur = defenseur.getElement();
 			int forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
-			int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);
-			int perteVie = forceAttaquant * (100 - defenseDefenseur) / 100;
+			int perteVie;
+			if (avecDef) {
+				int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);
+				perteVie = forceAttaquant * (100 - defenseDefenseur) / 100;
+			}
+			else perteVie = forceAttaquant;
 		
 			
 			// degats

@@ -174,13 +174,13 @@ public interface IArene extends Remote {
 	 * @return vrai si l'action a bien eu lieu, faux sinon
 	 * @throws RemoteException
 	 */
-	public boolean lanceAttaque(int refRMI, int refAdv) throws RemoteException;
+	public boolean lanceAttaque(int refRMI, int refAdv, boolean avecDef) throws RemoteException;
 	
 	public boolean lanceAttaqueParalysante(int refRMI, int refRMIAdv) throws RemoteException;
 	
 	public boolean lanceAttaqueBrulante(int refRMI, int refRMIAdv) throws RemoteException;
 	
-	public boolean lanceAttaqueADist(int refRMI, int refRMIAdv) throws RemoteException;
+	public boolean lanceAttaqueADist(int refRMI, int refRMIAdv, boolean avecDef) throws RemoteException;
 	
 	/**
 	 * Deplace le personnage correspondant a la console donne vers l'element 
