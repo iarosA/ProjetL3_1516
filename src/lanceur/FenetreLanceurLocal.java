@@ -28,9 +28,11 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	private JPanel panel = new JPanel(); //panel principal
 	
 	public static String[] classesPerso = {"Personnage", "Assassin", "Brute", "Cavalier", "Chimiste", "Grenadier", "Sniper"};
+	public static String[] classesPotion = {"Potion", "Soin", "Steroides", "Cola", "7Lieues", "Ketamine", "Arsenic", "LSD", "PCP"};
 	
-	private int i_perso = 0; //personnage selectionné
-	private String s_potion = new String("Potion"); //potion selectionnée
+	private int i_perso = 0; //indice personnage selectionné
+	private int i_potion = 0; //indice potion selectionné
+	
 	private String message = new String(""); //message d'information
 	
 	private JButton persoM = new JButton("\u25C0"); //fleche gauche selection perso
@@ -109,8 +111,19 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		
 		
 		//  Lancement Potions  \\
-		this.potionLabel = new JLabel(this.s_potion, JLabel.CENTER);
+		this.potionLabel = new JLabel(classesPotion[this.i_potion], JLabel.CENTER);
 		this.potionLabel.setPreferredSize(new Dimension(100, 50));	
+		//Visibilite des bouttons
+		if (this.i_potion == 0) {
+			this.potionM.setEnabled(false);
+		}
+		else if (this.i_potion == classesPotion.length - 1) {
+			this.potionP.setEnabled(false);
+		}
+		else {
+			this.potionM.setEnabled(true);
+			this.potionP.setEnabled(true);
+		}
 		//Panel
 		JPanel potionPanel = new JPanel();
 		potionPanel.add(this.potionM);
@@ -171,11 +184,11 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		}
 		////////////////////////////
 		else if (source == this.potionM) {
-			
+			this.i_potion--;
 		}
 		////////////////////////////
 		else if (source == this.potionP) {
-			
+			this.i_potion++;
 		}
 		////////////////////////////
 		else if (source == this.launchPotion) {
@@ -183,9 +196,9 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 				this.message = "Lancez d'abord l'arene et l'IHM..";
 			}
 			else {
-				Thread potionThread = new ThreadPotion();
+				Thread potionThread = new ThreadPotion(classesPerso[this.i_potion]);
 				potionThread.start();
-				this.message = "Potion déployée";
+				this.message = "Potion " + classesPotion[this.i_potion] + " déployée";
 			}
 		}
 		////////////////////////////
@@ -242,13 +255,28 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		}
 	}
 	private class ThreadPotion extends Thread {
+		private String classePotion;
+		
+		public ThreadPotion(String classePotion) {
+			super();
+			this.classePotion = classePotion;
+		}
 		public void run() {
-			LancePotion.main(new String[0]);
+			String[] args = new String[1];
+			args[0] = this.classePotion;
+			LancePotion.main(args);
 		}
 	}
 	
 	public static boolean existeClassePerso(String nom) {
 		for (String s : classesPerso) {
+			if (s.equals(nom)) return true;
+		}
+		return false;
+	}
+	
+	public static boolean existeClassePotion(String nom) {
+		for (String s : classesPotion) {
 			if (s.equals(nom)) return true;
 		}
 		return false;
