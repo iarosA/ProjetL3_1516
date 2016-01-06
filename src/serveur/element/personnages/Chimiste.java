@@ -17,7 +17,7 @@ public class Chimiste extends Personnage{
 		super(nom, groupe, caracts);
 		this.caracts.put(Caracteristique.VIE, 10);
 		this.caracts.put(Caracteristique.FORCE, 0);
-		this.caracts.put(Caracteristique.INITIATIVE, 100);
+		this.caracts.put(Caracteristique.INITIATIVE, 200);
 		this.caracts.put(Caracteristique.DEFENSE, 0);
 		this.caracts.put(Caracteristique.DEPLACEMENT, 1);
 	}
