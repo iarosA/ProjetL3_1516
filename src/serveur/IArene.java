@@ -176,6 +176,12 @@ public interface IArene extends Remote {
 	 */
 	public boolean lanceAttaque(int refRMI, int refAdv) throws RemoteException;
 	
+	public boolean lanceAttaqueParalysante(int refRMI, int refRMIAdv) throws RemoteException;
+	
+	public boolean lanceAttaqueBrulante(int refRMI, int refRMIAdv) throws RemoteException;
+	
+	public boolean lanceAttaqueADist(int refRMI, int refRMIAdv) throws RemoteException;
+	
 	/**
 	 * Deplace le personnage correspondant a la console donne vers l'element 
 	 * correspondant a la reference RMI cible.
@@ -241,5 +247,16 @@ public interface IArene extends Remote {
 	 */
 	public void lancePotion(Potion potion, Point position, String motDePasse) throws RemoteException;
 	
+	void subirDeplacementAccru(int refRMI) throws RemoteException;
+
+	void subirInvincibilite(int refRMI) throws RemoteException;
+
+	void subirParalysie(int refRMI) throws RemoteException;
+
+	void subirBrulure(int refRMI) throws RemoteException;
+	
+	public boolean teleport(int refRMI, Point objectif) throws RemoteException;
+
+	public boolean teleport(int refRMI, int refCible) throws RemoteException;
 }
 

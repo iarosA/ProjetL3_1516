@@ -20,6 +20,8 @@ public class Sniper extends Personnage {
 		this.caracts.put(Caracteristique.FORCE, 80);
 		this.caracts.put(Caracteristique.INITIATIVE, 10);
 		this.caracts.put(Caracteristique.DEFENSE, 20);
+		super.sauvegardeDefense = this.getCaract(Caracteristique.DEFENSE);
+		super.sauvegardeDepl = this.getCaract(Caracteristique.DEPLACEMENT);
 
 	}
 }

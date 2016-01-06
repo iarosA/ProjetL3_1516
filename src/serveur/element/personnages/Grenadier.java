@@ -20,6 +20,8 @@ public class Grenadier extends Personnage {
 		this.caracts.put(Caracteristique.FORCE, 50);
 		this.caracts.put(Caracteristique.INITIATIVE, 50);
 		this.caracts.put(Caracteristique.DEFENSE, 50);
+		super.sauvegardeDefense = this.getCaract(Caracteristique.DEFENSE);
+		super.sauvegardeDepl = this.getCaract(Caracteristique.DEPLACEMENT);
 
 	}
 }

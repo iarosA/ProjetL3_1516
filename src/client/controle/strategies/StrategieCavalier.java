@@ -10,7 +10,7 @@ import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
 import serveur.element.Potion;
-import serveur.element.personnages.Brute;
+import serveur.element.personnages.Cavalier;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -41,7 +41,7 @@ public class StrategieCavalier implements IStrategie{
 		
 		try {
 			console = new Console(ipArene, port, ipConsole, this, 
-					new Brute(nom, groupe, caracts), 
+					new Cavalier(nom, groupe, caracts), 
 					nbTours, position, logger);
 			logger.info("Lanceur", "Creation de la console reussie");
 			
@@ -79,33 +79,51 @@ public class StrategieCavalier implements IStrategie{
 		
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
-			arene.deplace(refRMI, 0, 2); 
+			arene.deplace(refRMI, 0, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT)); 
 			
 		} else {
 			int refCible = Calculs.chercheElementProche(position, voisins);
 			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
 
 			Element elemPlusProche = arene.elementFromRef(refCible);
-
+			
 			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
 				// j'interagis directement
-				if(elemPlusProche instanceof Potion) { // potion
+				if (elemPlusProche instanceof Potion) { // potion
 					// ramassage
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);
 
 				} else { // personnage
 					// duel
-					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible);
+					console.setPhrase("Je paralyse " + elemPlusProche.getNom());
+					arene.lanceAttaqueParalysante(refRMI, refCible);
+				}
+				
+			}
+			else if (distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION * 3) { // si suffisamment proches
+				// j'interagis directement
+				if (elemPlusProche instanceof Potion) { // potion
+					// ramassage
+					console.setPhrase("Je ramasse une potion");
+					arene.ramassePotion(refRMI, refCible);
+
+				} else { // personnage
+					// duel
+					console.setPhrase("Je brûle " + elemPlusProche.getNom());
+					arene.lanceAttaqueBrulante(refRMI, refCible);
 				}
 				
 			} else { // si voisins, mais plus eloignes
 				// je vais vers le plus proche
 				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
-				arene.deplace(refRMI, refCible, 2);
+				arene.deplace(refRMI, refCible, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT));
 			}
 		}
+		arene.subirBrulure(refRMI);
+		arene.subirParalysie(refRMI);
+		arene.subirInvincibilite(refRMI);
+		arene.subirDeplacementAccru(refRMI);
 	}
 
 }

@@ -126,4 +126,19 @@ public class Constantes {
 	public static String nomCompletClient(VueElement<?> client) {
 		return "("+ nomClasse(client) + client.getRefRMI() + " * " + client.getElement().getNomGroupe() + ")";
 	}
+	
+	public static int NB_TOURS_INVINCIBILITE = 10;	
+	
+	public static int NB_TOURS_DEPLACEMENT_ACCRU = 10;
+	
+	public static int EFFET_DEPLACEMENT_ACCRU = 2;
+	
+	public static int NB_TOURS_PARALYSIE = 5;
+	
+	public static int NB_TOURS_BRULURE = 10;
+	
+	public static int EFFET_BRULURE = -2;
+
+
+	
 }

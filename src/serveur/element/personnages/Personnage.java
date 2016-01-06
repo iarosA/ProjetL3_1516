@@ -8,6 +8,7 @@ import java.util.HashMap;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
 import utilitaires.Calculs;
+import utilitaires.Constantes;
 
 /**
  * Un personnage: un element possedant des caracteristiques et etant capable
@@ -16,8 +17,20 @@ import utilitaires.Calculs;
  */
 public class Personnage extends Element {
 	
+	
 	private static final long serialVersionUID = 1L;
 
+	protected int nbToursInvincibilite = 0;
+	protected int nbToursDeplacementAccru = 0;
+	protected int nbToursBrulure = 0;
+	protected int nbToursParalysie = 0;
+	
+	protected int sauvegardeDefense;
+	protected int sauvegardeDepl;
+	
+	
+	
+	
 	/**
 	 * Cree un personnage avec un nom et un groupe.
 	 * @param nom du personnage
@@ -26,6 +39,8 @@ public class Personnage extends Element {
 	 */
 	public Personnage(String nom, String groupe, HashMap<Caracteristique, Integer> caracts) {
 		super(nom, groupe, caracts);
+		this.sauvegardeDefense = this.getCaract(Caracteristique.DEFENSE);
+		this.sauvegardeDepl = this.getCaract(Caracteristique.DEPLACEMENT);
 	}
 	
 	/**
@@ -58,5 +73,100 @@ public class Personnage extends Element {
 	public boolean estVivant() {
 		Integer vie = caracts.get(Caracteristique.VIE);
 		return vie != null && vie > 0;
+	}
+	
+	public void brulure() {
+		this.nbToursBrulure = 1;
+	}
+	
+	public boolean subirBrulure() {
+		if (this.nbToursBrulure > 0) {
+			if (this.nbToursBrulure == Constantes.NB_TOURS_BRULURE)
+				this.nbToursBrulure = 0;
+			else
+				this.nbToursBrulure++;
+			if(getCaract(Caracteristique.DEFENSE)<100)
+				incrementeCaract(Caracteristique.VIE, Constantes.EFFET_BRULURE);
+			return true;
+		}
+		return false;
+	}
+	
+	public void invincibilite() {
+		this.nbToursInvincibilite = 1;
+		if (getCaract(Caracteristique.DEFENSE) != 100)
+		{
+			this.sauvegardeDefense = getCaract(Caracteristique.DEFENSE);
+			caracts.put(Caracteristique.DEFENSE, 100);
+		}
+	}
+	
+	public boolean subirInvincibilite() {
+		if (this.nbToursInvincibilite > 0) {
+			if (this.nbToursInvincibilite == Constantes.NB_TOURS_INVINCIBILITE)
+			{
+				this.nbToursInvincibilite = 0;
+				caracts.put(Caracteristique.DEFENSE, sauvegardeDefense);
+			}
+			else
+				this.nbToursInvincibilite++;
+			return true;
+		}
+		return false;
+	}
+	
+	public void paralysie() {
+		if (nbToursDeplacementAccru!=0)				//on teste si le sujet a un déplacement accru
+		{											//si oui, 
+			nbToursDeplacementAccru = 0;			//on lui retire l'effet et on restaure le Deplacement d'origine
+			caracts.put(Caracteristique.DEPLACEMENT, sauvegardeDepl);
+		}
+		this.nbToursParalysie = 1;
+		if (getCaract(Caracteristique.DEPLACEMENT) != 0)
+		{
+			this.sauvegardeDepl = getCaract(Caracteristique.DEPLACEMENT);
+			caracts.put(Caracteristique.DEPLACEMENT, 0);
+		}
+	}
+	
+	public boolean subirParalysie() {
+		if (this.nbToursParalysie > 0) {
+			if (this.nbToursParalysie == Constantes.NB_TOURS_PARALYSIE)
+			{
+				this.nbToursParalysie = 0;
+				caracts.put(Caracteristique.DEPLACEMENT, sauvegardeDepl);
+			}
+			else
+				this.nbToursParalysie++;
+			return true;
+		}
+		return false;
+	}
+	
+	public void deplacementAccru() {
+		if (nbToursParalysie!=0)				//on teste si le sujet est paralysé
+		{
+			nbToursParalysie = 0;				//si oui, on lui retire l'effet et on restaure le Deplacement d'origine
+			caracts.put(Caracteristique.DEPLACEMENT, sauvegardeDepl);
+		}
+		if(this.nbToursDeplacementAccru == 0)
+			this.sauvegardeDepl = getCaract(Caracteristique.DEPLACEMENT);
+		caracts.put(Caracteristique.DEPLACEMENT,
+				getCaract(Caracteristique.DEPLACEMENT) + Constantes.EFFET_DEPLACEMENT_ACCRU);
+		this.nbToursDeplacementAccru = 1;
+	}
+	
+	public boolean subirDeplacementAccru() {
+		if (this.nbToursDeplacementAccru > 0) {
+			if (this.nbToursDeplacementAccru == Constantes.NB_TOURS_DEPLACEMENT_ACCRU)
+			{
+				this.nbToursDeplacementAccru = 0;
+				caracts.put(Caracteristique.DEPLACEMENT, sauvegardeDepl);
+			}
+			else
+				this.nbToursDeplacementAccru++;
+			return true;
+		}
+		return false;
 	}
 }

@@ -67,6 +67,10 @@ public class Calculs {
 	public static Point meilleurPoint(Point origine, Point objectif, 
 			HashMap<Integer, Point> voisins, int distance) {
 		
+		if (distance==0)
+		{
+			return origine;
+		}
 		// liste contenant tous les positions vers lesquelles l'element peut avancer :
 		// les 8 cases autour de lui
 		ArrayList<Point> listePossibles = new ArrayList<Point>();		

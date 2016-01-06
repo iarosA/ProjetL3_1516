@@ -3,7 +3,6 @@ package serveur.element.personnages;
 import java.util.HashMap;
 
 import serveur.element.Caracteristique;
-import utilitaires.Calculs;
 
 public class Brute extends Personnage {
 	
@@ -21,5 +20,7 @@ public class Brute extends Personnage {
 			this.caracts.put(Caracteristique.FORCE, 80);
 			this.caracts.put(Caracteristique.INITIATIVE, 20);
 			this.caracts.put(Caracteristique.DEFENSE, 80);
+			super.sauvegardeDefense = this.getCaract(Caracteristique.DEFENSE);
+			super.sauvegardeDepl = this.getCaract(Caracteristique.DEPLACEMENT);
 		}
 	}

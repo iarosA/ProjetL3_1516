@@ -20,6 +20,8 @@ public class Assassin extends Personnage {
 		this.caracts.put(Caracteristique.FORCE, 40);
 		this.caracts.put(Caracteristique.INITIATIVE, 80);
 		this.caracts.put(Caracteristique.DEFENSE, 40);
+		super.sauvegardeDefense = this.getCaract(Caracteristique.DEFENSE);
+		super.sauvegardeDepl = this.getCaract(Caracteristique.DEPLACEMENT);
 
 	}
 }

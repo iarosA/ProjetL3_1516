@@ -23,6 +23,9 @@ import serveur.element.Potion;
 import serveur.element.personnages.Personnage;
 import serveur.interaction.Deplacement;
 import serveur.interaction.Duel;
+import serveur.interaction.DuelADistance;
+import serveur.interaction.DuelBrulant;
+import serveur.interaction.DuelParalysant;
 import serveur.interaction.Ramassage;
 import serveur.vuelement.VueElement;
 import serveur.vuelement.VuePersonnage;
@@ -796,6 +799,202 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	}
 	
 	@Override
+	
+	/**TODO
+	 * 
+	 * 
+	 * 
+	 */
+	public boolean lanceAttaqueParalysante(int refRMI, int refRMIAdv) throws RemoteException {
+		boolean res = false;
+		
+		VuePersonnage client = personnages.get(refRMI);
+		VuePersonnage clientAdv = personnages.get(refRMIAdv);
+		
+		if (personnages.get(refRMI).isActionExecutee()) {
+			// si une action a deja ete executee
+			logActionDejaExecutee(refRMI);
+			
+		} else {
+			// sinon, on tente de jouer l'interaction
+			IConsole console = consoleFromRef(refRMI);
+			IConsole consoleAdv = consoleFromRef(refRMIAdv);
+			
+			int distance = Calculs.distanceChebyshev(personnages.get(refRMI).getPosition(), 
+					personnages.get(refRMIAdv).getPosition());
+
+			// on teste la distance entre les personnages
+			if (distance <= Constantes.DISTANCE_MIN_INTERACTION) {
+				Personnage pers = (Personnage) elementFromRef(refRMI);
+				Personnage persAdv = (Personnage) elementFromRef(refRMIAdv);
+				
+				// on teste que les deux personnages soient en vie
+				if (pers.estVivant() && persAdv.estVivant()) {
+					console.log(Level.INFO, Constantes.nomClasse(this), 
+							"J'attaque comme une brute" + nomRaccourciClient(refRMIAdv));
+					consoleAdv.log(Level.INFO, Constantes.nomClasse(this), 
+							"Je me fait attaquer par une brute, j'ai peur de " + nomRaccourciClient(refRMI));
+					
+					logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+							" attaque brutalement" + nomRaccourciClient(consoleAdv.getRefRMI()));
+			
+					new DuelParalysant(this, client, clientAdv).interagit();
+					personnages.get(refRMI).executeAction();
+					
+					// si l'adversaire est mort
+					if (!persAdv.estVivant()) {
+						setPhrase(refRMI, "Je tue " + nomRaccourciClient(consoleAdv.getRefRMI()));
+						console.log(Level.INFO, Constantes.nomClasse(this), 
+								"Je tue " + nomRaccourciClient(refRMI));
+						
+						logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+								" tue " + nomRaccourciClient(consoleAdv.getRefRMI()));
+					}
+					
+					res = true;
+				} else {
+					logger.warning(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+							" a tente d'interagir avec "+nomRaccourciClient(refRMIAdv)+", alors qu'il est mort...");
+					
+					console.log(Level.WARNING, Constantes.nomClasse(this), 
+							nomRaccourciClient(refRMIAdv) + " est deja mort !");
+				}
+			} else {
+				logger.warning(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+						" a tente d'interagir avec "+nomRaccourciClient(refRMIAdv) + 
+						", alors qu'il est trop eloigne... Distance de chebyshev = " + distance);
+				
+				console.log(Level.WARNING, "AVERTISSEMENT ARENE", 
+						nomRaccourciClient(refRMIAdv) + " est trop eloigne !\nDistance = " + distance);
+			}
+		}
+		
+		return res;
+	}
+	
+	@Override
+	public boolean lanceAttaqueBrulante(int refRMI, int refRMIAdv) throws RemoteException {
+		boolean res = false;
+		
+		VuePersonnage client = personnages.get(refRMI);
+		VuePersonnage clientAdv = personnages.get(refRMIAdv);
+		
+		if (personnages.get(refRMI).isActionExecutee()) {
+			// si une action a deja ete executee
+			logActionDejaExecutee(refRMI);
+			
+		} else {
+			// sinon, on tente de jouer l'interaction
+			IConsole console = consoleFromRef(refRMI);
+			IConsole consoleAdv = consoleFromRef(refRMIAdv);
+			
+			int distance = Calculs.distanceChebyshev(personnages.get(refRMI).getPosition(), 
+					personnages.get(refRMIAdv).getPosition());
+
+			// on teste la distance entre les personnages
+			if (distance <= Constantes.DISTANCE_MIN_INTERACTION * 3) {
+				Personnage pers = (Personnage) elementFromRef(refRMI);
+				Personnage persAdv = (Personnage) elementFromRef(refRMIAdv);
+				
+				// on teste que les deux personnages soient en vie
+				if (pers.estVivant() && persAdv.estVivant()) {
+					console.log(Level.INFO, Constantes.nomClasse(this), 
+							"Je brule au lance-flamme" + nomRaccourciClient(refRMIAdv));
+					consoleAdv.log(Level.INFO, Constantes.nomClasse(this), 
+							"Je me fait brûler au lance flamme par " + nomRaccourciClient(refRMI));
+					
+					logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+							" brûle" + nomRaccourciClient(consoleAdv.getRefRMI()));
+			
+					new DuelBrulant(this, client, clientAdv).interagit();
+					personnages.get(refRMI).executeAction();
+					
+					// si l'adversaire est mort
+					if (!persAdv.estVivant()) {
+						setPhrase(refRMI, "Je tue " + nomRaccourciClient(consoleAdv.getRefRMI()));
+						console.log(Level.INFO, Constantes.nomClasse(this), 
+								"Je tue " + nomRaccourciClient(refRMI));
+						
+						logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+								" tue " + nomRaccourciClient(consoleAdv.getRefRMI()));
+					}
+					
+					res = true;
+				} else {
+					logger.warning(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+							" a tente d'interagir avec "+nomRaccourciClient(refRMIAdv)+", alors qu'il est mort...");
+					
+					console.log(Level.WARNING, Constantes.nomClasse(this), 
+							nomRaccourciClient(refRMIAdv) + " est deja mort !");
+				}
+			} else {
+				logger.warning(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+						" a tente d'interagir avec "+nomRaccourciClient(refRMIAdv) + 
+						", alors qu'il est trop eloigne... Distance de chebyshev = " + distance);
+				
+				console.log(Level.WARNING, "AVERTISSEMENT ARENE", 
+						nomRaccourciClient(refRMIAdv) + " est trop eloigne !\nDistance = " + distance);
+			}
+		}
+		
+		return res;
+	}
+	
+	@Override
+	public boolean lanceAttaqueADist(int refRMI, int refRMIAdv) throws RemoteException {
+		boolean res = false;
+		
+		VuePersonnage client = personnages.get(refRMI);
+		VuePersonnage clientAdv = personnages.get(refRMIAdv);
+		
+		if (personnages.get(refRMI).isActionExecutee()) {
+			// si une action a deja ete executee
+			logActionDejaExecutee(refRMI);
+			
+		} else {
+			// sinon, on tente de jouer l'interaction
+			IConsole console = consoleFromRef(refRMI);
+			IConsole consoleAdv = consoleFromRef(refRMIAdv);
+			Personnage pers = (Personnage) elementFromRef(refRMI);
+			Personnage persAdv = (Personnage) elementFromRef(refRMIAdv);
+			
+			// on teste que les deux personnages soient en vie
+			if (pers.estVivant() && persAdv.estVivant()) {
+				console.log(Level.INFO, Constantes.nomClasse(this), 
+						"J'attaque à distance " + nomRaccourciClient(refRMIAdv));
+				consoleAdv.log(Level.INFO, Constantes.nomClasse(this), 
+						"Je me fait attaquer à distance par " + nomRaccourciClient(refRMI));
+				
+				logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+						" attaque à distance " + nomRaccourciClient(consoleAdv.getRefRMI()));
+		
+				new DuelADistance(this, client, clientAdv).interagit();
+				personnages.get(refRMI).executeAction();
+				
+				// si l'adversaire est mort
+				if (!persAdv.estVivant()) {
+					setPhrase(refRMI, "Je tue à distance" + nomRaccourciClient(consoleAdv.getRefRMI()));
+					console.log(Level.INFO, Constantes.nomClasse(this), 
+							"Je tue à distance" + nomRaccourciClient(refRMI));
+					
+					logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+							" tue à distance " + nomRaccourciClient(consoleAdv.getRefRMI()));
+				}
+				
+				res = true;
+			} else {
+				logger.warning(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+						" a tente d'interagir avec "+nomRaccourciClient(refRMIAdv)+", alors qu'il est mort...");
+				
+				console.log(Level.WARNING, Constantes.nomClasse(this), 
+						nomRaccourciClient(refRMIAdv) + " est deja mort !");
+			}
+		}
+		
+		return res;
+	}
+	
+	@Override
 	public boolean deplace(int refRMI, int refCible, int distance) throws RemoteException {		
 		boolean res = false;
 		
@@ -808,6 +1007,27 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		} else {
 			// sinon, on tente de jouer l'interaction
 			new Deplacement(client, getVoisins(refRMI)).seDirigeVers(refCible, distance);
+			client.executeAction();
+			
+			res = true;
+		}
+		
+		return res;
+	}
+	
+	@Override
+	public boolean teleport(int refRMI, int refCible) throws RemoteException {		
+		boolean res = false;
+		
+		VuePersonnage client = personnages.get(refRMI);
+		
+		if (client.isActionExecutee()) {
+			// si une action a deja ete executee
+			logActionDejaExecutee(refRMI);
+			
+		} else {
+			// sinon, on tente de jouer l'interaction
+			new Deplacement(client, getVoisins(refRMI)).seTeleporteVers(refCible);
 			client.executeAction();
 			
 			res = true;
@@ -830,6 +1050,27 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 			new Deplacement(client, getVoisins(refRMI)).seDirigeVers(objectif, distance);
 			client.executeAction();
 
+			res = true;
+		}
+		
+		return res;
+	}
+	
+	@Override
+	public boolean teleport(int refRMI, Point objectif) throws RemoteException {		
+		boolean res = false;
+		
+		VuePersonnage client = personnages.get(refRMI);
+		
+		if (client.isActionExecutee()) {
+			// si une action a deja ete executee
+			logActionDejaExecutee(refRMI);
+			
+		} else {
+			// sinon, on tente de jouer l'interaction
+			new Deplacement(client, getVoisins(refRMI)).seTeleporteVers(objectif);
+			client.executeAction();
+			
 			res = true;
 		}
 		
@@ -868,6 +1109,94 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 				console.log(Level.INFO, Constantes.nomClasse(this), 
 						"J'ai gagne " + increment + " points de " + carac);
 			}
+		}
+	}
+	
+	@Override
+	public void subirBrulure(int refRMI) throws RemoteException {
+		Personnage pers = (Personnage)elementFromRef(refRMI);
+		IConsole cons = consoleFromRef(refRMI);
+		if (pers.subirBrulure())
+		{
+			if (pers.getCaract(Caracteristique.DEFENSE) != 100) {
+				if(pers.estVivant()) {
+					cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, j'ai perdu " + Constantes.EFFET_BRULURE + " points de brûlure.");		
+				}
+				else
+					cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort de mes brûlures");
+			}
+			else {
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Mon invulnérabilité me fait résister à ma brûlure.");
+			}
+			cons.setPhrase("Je souffre de ma brulûre..");
+		}
+	}
+	
+	@Override
+	public void subirParalysie(int refRMI) throws RemoteException {
+		Personnage pers = (Personnage)elementFromRef(refRMI);
+		IConsole cons = consoleFromRef(refRMI);
+		if (pers.subirParalysie())
+		{
+			if(pers.estVivant()) {
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis paralysé ");		
+			}
+			else
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort paralysé");
+			cons.setPhrase("Je suis paralysé, je ne peux plus me deplacer..");
+		}
+	}
+
+	@Override
+	public void subirInvincibilite(int refRMI) throws RemoteException {
+		Personnage pers = (Personnage)elementFromRef(refRMI);
+		IConsole cons = consoleFromRef(refRMI);
+		if (pers.subirInvincibilite())
+		{
+			if(pers.estVivant()) {
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis invincible ce tour ");		
+			}
+			cons.setPhrase("Je suis invincible!");
+		}
+	}
+	
+	@Override
+	public void subirDeplacementAccru(int refRMI) throws RemoteException {
+		Personnage pers = (Personnage)elementFromRef(refRMI);
+		IConsole cons = consoleFromRef(refRMI);
+		if (pers.subirDeplacementAccru())
+		{
+			if(pers.estVivant()) {
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Je cours plus vite ce tour ");		
+			}
+		}
+	}
+	
+	public void brulure(VuePersonnage vuePersonnage) throws RemoteException {
+		
+		int refRMI = vuePersonnage.getRefRMI();
+		IConsole console = consoleFromRef(refRMI);
+		Personnage pers = vuePersonnage.getElement();
+		
+		// increment de la caracteristique
+		pers.brulure();
+		
+		if(pers.estVivant()) {
+			console.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis en feu !!!");				
+		}
+	}
+	
+	public void paralysie(VuePersonnage vuePersonnage) throws RemoteException {
+		
+		int refRMI = vuePersonnage.getRefRMI();
+		IConsole console = consoleFromRef(refRMI);
+		Personnage pers = vuePersonnage.getElement();
+		
+		// increment de la caracteristique
+		pers.paralysie();
+		
+		if(pers.estVivant()) {
+			console.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis paralysé !!!");				
 		}
 	}
 	

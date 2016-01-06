@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 
 import client.controle.strategies.IStrategie;
-import client.controle.strategies.StrategiePersonnage;
 import serveur.IArene;
 import serveur.element.personnages.Personnage;
 
@@ -78,6 +77,7 @@ public interface IConsole extends Remote {
 	 * @throws RemoteException
 	 */
 	public void log(Level level, String prefixe, String msg) throws RemoteException;
+
 }
 
 

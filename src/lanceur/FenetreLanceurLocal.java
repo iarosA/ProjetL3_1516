@@ -20,6 +20,11 @@ import javax.swing.JPanel;
  */
 public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private JPanel panel = new JPanel(); //panel principal
 	
 	public static String[] classesPerso = {"Personnage", "Assassin", "Brute", "Cavalier", "Grenadier", "Sniper"};
@@ -252,6 +257,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	
 	// MAIN
 	public static void main(String[] args) {
+		@SuppressWarnings("unused")
 		FenetreLanceurLocal fenetre = new FenetreLanceurLocal();
 	}	
 }

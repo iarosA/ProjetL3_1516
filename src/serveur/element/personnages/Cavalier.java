@@ -20,6 +20,9 @@ public class Cavalier extends Personnage {
 		this.caracts.put(Caracteristique.FORCE, 60);
 		this.caracts.put(Caracteristique.INITIATIVE, 70);
 		this.caracts.put(Caracteristique.DEFENSE, 60);
+		this.caracts.put(Caracteristique.DEPLACEMENT, 2);
+		super.sauvegardeDefense = this.getCaract(Caracteristique.DEFENSE);
+		super.sauvegardeDepl = this.getCaract(Caracteristique.DEPLACEMENT);
 
 	}
 }

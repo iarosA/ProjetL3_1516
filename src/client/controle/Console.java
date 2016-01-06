@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.logging.Level;
 
 import client.controle.strategies.IStrategie;
-import client.controle.strategies.StrategiePersonnage;
 import logger.LoggerProjet;
 import serveur.IArene;
 import serveur.element.personnages.Personnage;
@@ -148,7 +147,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 		// applique la strategie du personnage
 		strategiePer.executeStrategie(voisins);
 	}
-
+	
 
 	@Override
 	public void deconnecte(String cause) throws RemoteException {
