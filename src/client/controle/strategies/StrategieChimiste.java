@@ -71,7 +71,6 @@ public class StrategieChimiste implements IStrategie{
 		
 		try {
 			refRMI = console.getRefRMI();
-			position = arene.getPosition(refRMI);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -79,29 +78,60 @@ public class StrategieChimiste implements IStrategie{
 		arene.teleport(refRMI, 0);
 		console.setPhrase("Je me teleporte");
 		
+		int choixPotion = Calculs.nombreAleatoire(1, 3);
+		switch (choixPotion) {
+		case 1: console.setPhrase("Je depose du poison");
+				break;
+		case 2: console.setPhrase("Je depose une potion de paralysie");
+				break;
+		case 3: console.setPhrase("Je depose une potion de teleportation");
+				break;
+		}
+		
 		VuePersonnage moi = (VuePersonnage) arene.vueFromRef(refRMI);
 		moi.executeAction();
-		
-		int choixPotion = Calculs.nombreAleatoire(1, 3);
-		
-		switch(choixPotion){
-		case 1:
-			console.setPhrase("Je depose du poison");
-			arene.ajoutePotion(new PotionPoison("Poison", "G13", null), position);
-			break;
-		case 2:
-			console.setPhrase("Je depose une potion de paralysie");
-			arene.ajoutePotion(new PotionParalysie("Potion de Paralysie", "G13", null), position);
-			break;
-		case 3:
-			console.setPhrase("Je depose une potion de teleportation");
-			arene.ajoutePotion(new PotionTeleportation("Potion de Teleportation", "G13", null), position);
-			break;
-		}
+	
 		arene.subirBrulure(refRMI);
 		arene.subirParalysie(refRMI);
 		arene.subirInvincibilite(refRMI);
 		arene.subirDeplacementAccru(refRMI);
+		
+		position = arene.getPosition(refRMI);
+		
+		new ThreadChimiste(arene, choixPotion, position);
 	}
 
+	private class ThreadChimiste extends Thread {
+		private IArene arene;
+		private int choixPotion;
+		private Point position;
+		
+		public ThreadChimiste(IArene arene, int choixPotion, Point pos) {
+			super();
+			this.setDaemon(true);
+			this.arene = arene;
+			this.choixPotion = choixPotion;
+			this.position = pos;
+			start();
+		}
+		
+		public void run() {
+			
+			try {
+				switch(choixPotion){
+				case 1:
+					arene.ajoutePotion(new PotionPoison("Arsenic", "Chimiste", new HashMap<Caracteristique, Integer>()), position);
+					break;
+				case 2:
+					arene.ajoutePotion(new PotionParalysie("Ketamine", "Chimiste", new HashMap<Caracteristique, Integer>()), position);
+					break;
+				case 3:
+					arene.ajoutePotion(new PotionTeleportation("LSD", "Chimiste", new HashMap<Caracteristique, Integer>()), position);
+					break;
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

@@ -50,8 +50,8 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	
 	private boolean estLance = false; //arène et IHM lancé?
 
-	private Thread areneThread; //thread pour l'arene
-	private Thread IHMThread; //thread pour l'IHM
+	private ThreadArene areneThread = null; //thread pour l'arene
+	private ThreadIHM IHMThread = null; //thread pour l'IHM
 
 	
 	/**
@@ -177,8 +177,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 				this.message = "Lancez d'abord l'arene et l'IHM..";
 			}
 			else {
-				Thread persoThread = new ThreadPerso(classesPerso[this.i_perso]);
-				persoThread.start();
+				new ThreadPerso(classesPerso[this.i_perso]);
 				this.message = classesPerso[this.i_perso] + " déployé.";
 			}
 		}
@@ -196,8 +195,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 				this.message = "Lancez d'abord l'arene et l'IHM..";
 			}
 			else {
-				Thread potionThread = new ThreadPotion(classesPotion[this.i_potion]);
-				potionThread.start();
+				new ThreadPotion(classesPotion[this.i_potion]);
 				this.message = "Potion " + classesPotion[this.i_potion] + " déployée";
 			}
 		}
@@ -206,7 +204,6 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 			if (!this.estLance) {
 				//si pas lancé on lance l'arene
 				this.areneThread = new ThreadArene();
-				this.areneThread.start();
 				try {
 					//on attend 1 sec pour être sûr que l'arène s'est lancée
 					Thread.sleep(1000);
@@ -215,7 +212,6 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 				}
 				//puis on lance l'IHM
 				this.IHMThread = new ThreadIHM();
-				this.IHMThread.start();
 				this.estLance = true;
 				this.message = "Arène et IHM lancés.";
 			}
@@ -231,11 +227,20 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	
 	// THREADS
 	private class ThreadArene extends Thread {
+		public ThreadArene() {
+			super();
+			start();
+		}
 		public void run() {
 			LanceArene.main(new String[0]);
 		}
 	}
 	private class ThreadIHM extends Thread {
+		public ThreadIHM() {
+			super();
+			start();
+		}
+		
 		public void run() {
 			LanceIHM.main(new String[0]);
 		}
@@ -246,6 +251,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		public ThreadPerso(String classePerso) {
 			super();
 			this.classePerso = classePerso;
+			start();
 		}
 		
 		public void run() {
@@ -260,6 +266,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		public ThreadPotion(String classePotion) {
 			super();
 			this.classePotion = classePotion;
+			start();
 		}
 		public void run() {
 			String[] args = new String[1];
