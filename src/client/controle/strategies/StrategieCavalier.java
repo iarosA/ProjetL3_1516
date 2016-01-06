@@ -10,6 +10,7 @@ import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
 import serveur.element.personnages.Cavalier;
+import serveur.element.personnages.Personnage;
 import serveur.element.potions.Potion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
@@ -51,12 +52,11 @@ public class StrategieCavalier implements IStrategie{
 		}
 	}
 
-	// TODO etablir une strategie afin d'evoluer dans l'arene de combat
-	// une proposition de strategie (simple) est donnee ci-dessous
 	/** 
 	 * Decrit la strategie.
 	 * Les methodes pour evoluer dans le jeu doivent etre les methodes RMI
 	 * de Arene et de ConsolePersonnage. 
+	 * Le cavalier se deplace plus vite, tape au corps a corps ou a moyenne distance
 	 * @param voisins element voisins de cet element (elements qu'il voit)
 	 * @throws RemoteException
 	 */
@@ -96,22 +96,24 @@ public class StrategieCavalier implements IStrategie{
 
 				} else { // personnage
 					// duel
-					console.setPhrase("Je paralyse " + elemPlusProche.getNom());
-					arene.lanceAttaqueParalysante(refRMI, refCible);
+					console.setPhrase("Coup d'epee a " + elemPlusProche.getNom());
+					arene.lanceAttaque(refRMI, refCible, true);
 				}
 				
 			}
 			else if (distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION * 3) { // si suffisamment proches
 				// j'interagis directement
-				if (elemPlusProche instanceof Potion) { // potion
-					// ramassage
-					console.setPhrase("Je ramasse une potion");
-					arene.ramassePotion(refRMI, refCible);
-
-				} else { // personnage
-					// duel
-					console.setPhrase("Je br�le " + elemPlusProche.getNom());
-					arene.lanceAttaqueBrulante(refRMI, refCible);
+				if (elemPlusProche instanceof Personnage) 
+				{ 
+					// personnage
+					// duel a distance a l'arc
+					console.setPhrase("Je sors mon arc et je vise " + elemPlusProche.getNom());
+					arene.lanceAttaqueADist(refRMI, refCible, true);
+				} 
+				else 
+				{ 
+					console.setPhrase("Je sors mon arc et je vise " + elemPlusProche.getNom());
+					arene.lanceAttaqueADist(refRMI, refCible, true);
 				}
 				
 			} else { // si voisins, mais plus eloignes
