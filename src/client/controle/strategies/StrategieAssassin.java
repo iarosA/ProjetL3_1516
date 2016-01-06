@@ -91,23 +91,26 @@ public class StrategieAssassin implements IStrategie{
 			Element elemPlusProche = arene.elementFromRef(refCible);
 
 			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION ) { // si suffisamment proches
-				// j'interagis directement
+																		// j'interagis directement
 				if(elemPlusProche instanceof Potion) { // potion
 														// ramassage
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);
 
-				} else { // personnage
-						// duel
-					
+				} else { 												// personnage
+																		// duel
 						console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
 						arene.lanceAttaque(refRMI, refCible, true);
-					}
+						}
 				
 			} else { // si voisins, mais plus eloignes
-				// je vais vers le plus proche
+					// je vais vers le plus proche
 				if(nbTours_Teleport==0 && elemPlusProche instanceof Personnage)
 				{
+									//lorque l'adversaire est hors de portée et que la 
+									//teleportation a fini de charger, l'assassin se teleporte
+									//et effectue une attaque simultanement ne prenant pas en compte la defense
+									//de l'adversaire.
 					console.setPhrase("Je me deplace furtivement dans le dos de" + elemPlusProche.getNom());
 					arene.teleport(refRMI, refCible);
 					this.nbTours_Teleport = 1;
@@ -115,8 +118,6 @@ public class StrategieAssassin implements IStrategie{
 					arene.setActionExecutee(moi, false);
 					console.setPhrase("J'attaque furtivement " + elemPlusProche.getNom());
 					arene.lanceAttaque(refRMI, refCible, false);
-					
-					
 				}
 				else
 				{
@@ -126,9 +127,9 @@ public class StrategieAssassin implements IStrategie{
 				
 			}
 		}
-		if(nbTours_Teleport > 0)
-		{
-			if(nbTours_Teleport==5)
+		if(nbTours_Teleport > 0)			//gestion du compteur de teleportation
+		{									//il s'incremente au fil des tours
+			if(nbTours_Teleport==5)			//lorsqu'il est a 0 il le reste
 				nbTours_Teleport = 0;
 			else
 				nbTours_Teleport++;
