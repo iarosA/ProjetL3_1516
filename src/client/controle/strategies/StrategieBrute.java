@@ -10,7 +10,9 @@ import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
 import serveur.element.personnages.Brute;
+import serveur.element.personnages.Personnage;
 import serveur.element.potions.Potion;
+import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -21,6 +23,10 @@ public class StrategieBrute implements IStrategie{
 	 * (l'arene).
 	 */
 	protected Console console;
+	
+	protected int nbTours_paralysie = 0;
+	
+	protected boolean invincibiliteDeclenchee = false;
 
 	/**
 	 * Cree un personnage, la console associe et sa strategie.
@@ -62,54 +68,81 @@ public class StrategieBrute implements IStrategie{
 	 */
 	public void executeStrategie(HashMap<Integer, Point> voisins) throws RemoteException {
 		// arene
-		IArene arene = console.getArene();
-		
-		// reference RMI de l'element courant
-		int refRMI = 0;
-		
-		// position de l'element courant
-		Point position = null;
-		
-		try {
-			refRMI = console.getRefRMI();
-			position = arene.getPosition(refRMI);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		
-		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
-			console.setPhrase("J'erre...");
-			arene.deplace(refRMI, 0, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT)); 
-			
-		} else {
-			int refCible = Calculs.chercheElementProche(position, voisins);
-			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
-
-			Element elemPlusProche = arene.elementFromRef(refCible);
-
-			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
-				// j'interagis directement
-				if(elemPlusProche instanceof Potion) { // potion
-					// ramassage
-					console.setPhrase("Je ramasse une potion");
-					arene.ramassePotion(refRMI, refCible);
-
-				} else { // personnage
-					// duel
-					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible, true);
+				IArene arene = console.getArene();
+				
+				// reference RMI de l'element courant
+				int refRMI = 0;
+				
+				// position de l'element courant
+				Point position = null;
+				
+				try {
+					refRMI = console.getRefRMI();
+					position = arene.getPosition(refRMI);
+				} catch (RemoteException e) {
+					e.printStackTrace();
 				}
 				
-			} else { // si voisins, mais plus eloignes
-				// je vais vers le plus proche
-				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
-				arene.deplace(refRMI, refCible, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT));
-			}
-		}
-		arene.subirBrulure(refRMI);
-		arene.subirParalysie(refRMI);
-		arene.subirInvincibilite(refRMI);
-		arene.subirDeplacementAccru(refRMI);
+				//si vie inferieure a 20, declenchement de l'invincibilite
+				if( !(this.invincibiliteDeclenchee) && console.getPersonnage().getCaract(Caracteristique.VIE) <= 20){
+					console.setPhrase("Je déclenche mon invincibilité");
+					arene.invincibilite((VuePersonnage)arene.vueFromRef(refRMI));
+					this.invincibiliteDeclenchee = true;
+				}
+				
+				
+				if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
+					console.setPhrase("J'erre...");
+					arene.deplace(refRMI, 0, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT)); 
+					
+				} else {
+					int refCible = Calculs.chercheElementProche(position, voisins);
+					int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
+
+					Element elemPlusProche = arene.elementFromRef(refCible);
+
+					if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
+						// j'interagis directement
+						if(elemPlusProche instanceof Potion) { // potion
+							// ramassage
+							console.setPhrase("Je ramasse une potion");
+							arene.ramassePotion(refRMI, refCible);
+
+						} else { // personnage
+							if (this.nbTours_paralysie == 0) {
+								this.nbTours_paralysie = 1;
+								console.setPhrase("Je paralyse " + elemPlusProche.getNom());
+								arene.lanceAttaqueParalysante(refRMI, refCible);//attaque paralysante
+							}
+							else {
+								// duel
+								console.setPhrase("Je marave " + elemPlusProche.getNom());
+								arene.lanceAttaque(refRMI, refCible, true);
+							}
+						}
+					} else if (this.nbTours_paralysie == 0) {
+						if (elemPlusProche instanceof Personnage) {
+							this.nbTours_paralysie = 1;
+							console.setPhrase("Je paralyse " + elemPlusProche.getNom());
+							arene.lanceAttaqueParalysante(refRMI, refCible);//attaque paralysante
+						}	
+					} else { // si voisins, mais plus eloignes
+						// je vais vers le plus proche
+						console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+						arene.deplace(refRMI, refCible, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT));
+					}
+				}
+				if (this.nbTours_paralysie > 0) {
+					if (this.nbTours_paralysie == 5) {
+						this.nbTours_paralysie = 0;
+						console.setPhrase("Je peux paralyser a nouveau");
+					}
+					else this.nbTours_paralysie++;
+				}
+				arene.subirBrulure(refRMI);
+				arene.subirParalysie(refRMI);
+				arene.subirInvincibilite(refRMI);
+				arene.subirDeplacementAccru(refRMI);
 	}
 
 }
