@@ -112,11 +112,6 @@ public class StrategieCavalier implements IStrategie{
 					console.setPhrase("Je sors mon arc et je vise " + elemPlusProche.getNom());
 					arene.lanceAttaqueADist(refRMI, refCible, true);
 				} 
-				else 
-				{ 
-					console.setPhrase("Je sors mon arc et je vise " + elemPlusProche.getNom());
-					arene.lanceAttaqueADist(refRMI, refCible, true);
-				}
 				
 			} else { // si voisins, mais plus eloignes
 				// je vais vers le plus proche

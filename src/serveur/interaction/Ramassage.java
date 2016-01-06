@@ -6,7 +6,7 @@ import java.util.logging.Level;
 
 import serveur.Arene;
 import serveur.element.Caracteristique;
-import serveur.element.potions.Potion;
+import serveur.element.Element;
 import serveur.element.potions.PotionDeplacement;
 import serveur.element.potions.PotionInvincibilite;
 import serveur.element.potions.PotionParalysie;
@@ -41,7 +41,7 @@ public class Ramassage extends Interaction<VuePotion> {
 			// si le personnage est vivant
 			if(attaquant.getElement().estVivant()) {
 				
-				Potion potion = defenseur.getElement();
+				Element potion = defenseur.getElement();
 				
 				if (potion instanceof PotionDeplacement) {
 					arene.deplacemenAccru(attaquant);

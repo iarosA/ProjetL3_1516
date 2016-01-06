@@ -10,6 +10,7 @@ import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
 import serveur.element.personnages.Grenadier;
+import serveur.element.personnages.Personnage;
 import serveur.element.potions.Potion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
@@ -105,17 +106,21 @@ public class StrategieGrenadier implements IStrategie{
 				
 			//si le grenadier est a 3 fois la distance minimale d'interaction, il lance une attaque brulante
 			} 
-			else if(distPlusProche <= 3*Constantes.DISTANCE_MIN_INTERACTION){ // personnage
+			else if (distPlusProche <= 3*Constantes.DISTANCE_MIN_INTERACTION){ // personnage
 				// duel
-				console.setPhrase("Je brule " + elemPlusProche.getNom());
-				arene.lanceAttaqueBrulante(refRMI, refCible);
+				if (elemPlusProche instanceof Personnage) {
+					console.setPhrase("Je brule " + elemPlusProche.getNom());
+					arene.lanceAttaqueBrulante(refRMI, refCible);
+				}
 			}
 			
 			//sinon, si le grenadier est a 5 fois la distance minimale d'interaction, il lance une attaque a distance
 			else if(distPlusProche <= 5*Constantes.DISTANCE_MIN_INTERACTION){ // personnage
 				// duel
-				console.setPhrase("J'attaque " + elemPlusProche.getNom()+" a distance");
-				arene.lanceAttaqueADist(refRMI, refCible, true);
+				if(elemPlusProche instanceof Personnage) {
+					console.setPhrase("J'attaque " + elemPlusProche.getNom()+" a distance");
+					arene.lanceAttaqueADist(refRMI, refCible, true);
+				}
 				
 			//sinon, il se deplace vers un voisin
 			} else { // si voisins, mais plus eloignes
