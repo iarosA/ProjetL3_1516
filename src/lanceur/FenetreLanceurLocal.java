@@ -196,7 +196,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 				this.message = "Lancez d'abord l'arene et l'IHM..";
 			}
 			else {
-				Thread potionThread = new ThreadPotion(classesPerso[this.i_potion]);
+				Thread potionThread = new ThreadPotion(classesPotion[this.i_potion]);
 				potionThread.start();
 				this.message = "Potion " + classesPotion[this.i_potion] + " déployée";
 			}
