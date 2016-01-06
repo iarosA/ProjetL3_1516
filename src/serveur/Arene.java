@@ -731,7 +731,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	}
 	
 	@Override
-	public boolean lanceAttaque(int refRMI, int refRMIAdv) throws RemoteException {
+	public boolean lanceAttaque(int refRMI, int refRMIAdv, boolean avecDef) throws RemoteException {
 		boolean res = false;
 		
 		VuePersonnage client = personnages.get(refRMI);
@@ -764,7 +764,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 					logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
 							" attaque " + nomRaccourciClient(consoleAdv.getRefRMI()));
 			
-					new Duel(this, client, clientAdv).interagit();
+					new Duel(this, client, clientAdv, avecDef).interagit();
 					personnages.get(refRMI).executeAction();
 					
 					// si l'adversaire est mort
@@ -901,10 +901,10 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 					console.log(Level.INFO, Constantes.nomClasse(this), 
 							"Je brule au lance-flamme" + nomRaccourciClient(refRMIAdv));
 					consoleAdv.log(Level.INFO, Constantes.nomClasse(this), 
-							"Je me fait brûler au lance flamme par " + nomRaccourciClient(refRMI));
+							"Je me fait brï¿½ler au lance flamme par " + nomRaccourciClient(refRMI));
 					
 					logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
-							" brûle" + nomRaccourciClient(consoleAdv.getRefRMI()));
+							" brï¿½le" + nomRaccourciClient(consoleAdv.getRefRMI()));
 			
 					new DuelBrulant(this, client, clientAdv).interagit();
 					personnages.get(refRMI).executeAction();
@@ -941,7 +941,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	}
 	
 	@Override
-	public boolean lanceAttaqueADist(int refRMI, int refRMIAdv) throws RemoteException {
+	public boolean lanceAttaqueADist(int refRMI, int refRMIAdv, boolean avecDef) throws RemoteException {
 		boolean res = false;
 		
 		VuePersonnage client = personnages.get(refRMI);
@@ -961,24 +961,24 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 			// on teste que les deux personnages soient en vie
 			if (pers.estVivant() && persAdv.estVivant()) {
 				console.log(Level.INFO, Constantes.nomClasse(this), 
-						"J'attaque à distance " + nomRaccourciClient(refRMIAdv));
+						"J'attaque ï¿½ distance " + nomRaccourciClient(refRMIAdv));
 				consoleAdv.log(Level.INFO, Constantes.nomClasse(this), 
-						"Je me fait attaquer à distance par " + nomRaccourciClient(refRMI));
+						"Je me fait attaquer ï¿½ distance par " + nomRaccourciClient(refRMI));
 				
 				logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
-						" attaque à distance " + nomRaccourciClient(consoleAdv.getRefRMI()));
+						" attaque ï¿½ distance " + nomRaccourciClient(consoleAdv.getRefRMI()));
 		
-				new DuelADistance(this, client, clientAdv).interagit();
+				new DuelADistance(this, client, clientAdv, avecDef).interagit();
 				personnages.get(refRMI).executeAction();
 				
 				// si l'adversaire est mort
 				if (!persAdv.estVivant()) {
-					setPhrase(refRMI, "Je tue à distance" + nomRaccourciClient(consoleAdv.getRefRMI()));
+					setPhrase(refRMI, "Je tue ï¿½ distance" + nomRaccourciClient(consoleAdv.getRefRMI()));
 					console.log(Level.INFO, Constantes.nomClasse(this), 
-							"Je tue à distance" + nomRaccourciClient(refRMI));
+							"Je tue ï¿½ distance" + nomRaccourciClient(refRMI));
 					
 					logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
-							" tue à distance " + nomRaccourciClient(consoleAdv.getRefRMI()));
+							" tue ï¿½ distance " + nomRaccourciClient(consoleAdv.getRefRMI()));
 				}
 				
 				res = true;
@@ -1120,15 +1120,15 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		{
 			if (pers.getCaract(Caracteristique.DEFENSE) != 100) {
 				if(pers.estVivant()) {
-					cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, j'ai perdu " + Constantes.EFFET_BRULURE + " points de brûlure.");		
+					cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, j'ai perdu " + Constantes.EFFET_BRULURE + " points de brï¿½lure.");		
 				}
 				else
-					cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort de mes brûlures");
+					cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort de mes brï¿½lures");
 			}
 			else {
-				cons.log(Level.INFO, Constantes.nomClasse(this), "Mon invulnérabilité me fait résister à ma brûlure.");
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Mon invulnï¿½rabilitï¿½ me fait rï¿½sister ï¿½ ma brï¿½lure.");
 			}
-			cons.setPhrase("Je souffre de ma brulûre..");
+			cons.setPhrase("Je souffre de ma brulï¿½re..");
 		}
 	}
 	
@@ -1139,11 +1139,11 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		if (pers.subirParalysie())
 		{
 			if(pers.estVivant()) {
-				cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis paralysé ");		
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis paralysï¿½ ");		
 			}
 			else
-				cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort paralysé");
-			cons.setPhrase("Je suis paralysé, je ne peux plus me deplacer..");
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort paralysï¿½");
+			cons.setPhrase("Je suis paralysï¿½, je ne peux plus me deplacer..");
 		}
 	}
 
@@ -1196,7 +1196,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		pers.paralysie();
 		
 		if(pers.estVivant()) {
-			console.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis paralysé !!!");				
+			console.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis paralysï¿½ !!!");				
 		}
 	}
 	

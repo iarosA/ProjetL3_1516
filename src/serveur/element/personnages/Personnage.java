@@ -116,7 +116,7 @@ public class Personnage extends Element {
 	}
 	
 	public void paralysie() {
-		if (nbToursDeplacementAccru!=0)				//on teste si le sujet a un déplacement accru
+		if (nbToursDeplacementAccru != 0)				//on teste si le sujet a un deplacement accru
 		{											//si oui, 
 			nbToursDeplacementAccru = 0;			//on lui retire l'effet et on restaure le Deplacement d'origine
 			caracts.put(Caracteristique.DEPLACEMENT, sauvegardeDepl);
@@ -144,7 +144,7 @@ public class Personnage extends Element {
 	}
 	
 	public void deplacementAccru() {
-		if (nbToursParalysie!=0)				//on teste si le sujet est paralysé
+		if (nbToursParalysie != 0)				//on teste si le sujet est paralyse
 		{
 			nbToursParalysie = 0;				//si oui, on lui retire l'effet et on restaure le Deplacement d'origine
 			caracts.put(Caracteristique.DEPLACEMENT, sauvegardeDepl);

@@ -20,7 +20,7 @@ public class DuelParalysant extends Duel {
 	 * @param defenseur defenseur
 	 */
 	public DuelParalysant(Arene arene, VuePersonnage attaquant, VuePersonnage defenseur) {
-		super(arene, attaquant, defenseur);
+		super(arene, attaquant, defenseur, true);
 	}
 	
 	@Override
