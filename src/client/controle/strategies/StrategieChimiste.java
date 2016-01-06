@@ -12,7 +12,6 @@ import serveur.element.personnages.Chimiste;
 import serveur.element.potions.PotionParalysie;
 import serveur.element.potions.PotionPoison;
 import serveur.element.potions.PotionTeleportation;
-import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
 
 public class StrategieChimiste implements IStrategie{
@@ -78,23 +77,21 @@ public class StrategieChimiste implements IStrategie{
 		
 		arene.teleport(refRMI, 0);
 		console.setPhrase("Je me teleporte");
-		VuePersonnage moi = (VuePersonnage) arene.vueFromRef(refRMI);
-		arene.setActionExecutee(moi, false);
 		
 		int choixPotion = Calculs.nombreAleatoire(1, 3);
 		
 		switch(choixPotion){
 		case 1:
 			console.setPhrase("Je depose du poison");
-			arene.ajoutePotion(new PotionPoison("Poison", "G13", new HashMap<Caracteristique, Integer>()), position);
+			arene.ajoutePotion(new PotionPoison("Poison", "G13", null), position);
 			break;
 		case 2:
 			console.setPhrase("Je depose une potion de paralysie");
-			arene.ajoutePotion(new PotionParalysie("Potion de Paralysie", "G13", new HashMap<Caracteristique, Integer>()), position);
+			arene.ajoutePotion(new PotionParalysie("Potion de Paralysie", "G13", null), position);
 			break;
 		case 3:
 			console.setPhrase("Je depose une potion de teleportation");
-			arene.ajoutePotion(new PotionTeleportation("Potion de Teleportation", "G13", new HashMap<Caracteristique, Integer>()), arene.getPosition(refRMI));
+			arene.ajoutePotion(new PotionTeleportation("Potion de Teleportation", "G13", null), position);
 			break;
 		}
 		arene.subirBrulure(refRMI);

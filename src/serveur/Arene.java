@@ -961,24 +961,24 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 			// on teste que les deux personnages soient en vie
 			if (pers.estVivant() && persAdv.estVivant()) {
 				console.log(Level.INFO, Constantes.nomClasse(this), 
-						"J'attaque � distance " + nomRaccourciClient(refRMIAdv));
+						"J'attaque a distance " + nomRaccourciClient(refRMIAdv));
 				consoleAdv.log(Level.INFO, Constantes.nomClasse(this), 
-						"Je me fait attaquer � distance par " + nomRaccourciClient(refRMI));
+						"Je me fait attaquer a distance par " + nomRaccourciClient(refRMI));
 				
 				logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
-						" attaque � distance " + nomRaccourciClient(consoleAdv.getRefRMI()));
+						" attaque a distance " + nomRaccourciClient(consoleAdv.getRefRMI()));
 		
 				new DuelADistance(this, client, clientAdv, avecDef).interagit();
 				personnages.get(refRMI).executeAction();
 				
 				// si l'adversaire est mort
 				if (!persAdv.estVivant()) {
-					setPhrase(refRMI, "Je tue � distance" + nomRaccourciClient(consoleAdv.getRefRMI()));
+					setPhrase(refRMI, "Je tue a distance" + nomRaccourciClient(consoleAdv.getRefRMI()));
 					console.log(Level.INFO, Constantes.nomClasse(this), 
-							"Je tue � distance" + nomRaccourciClient(refRMI));
+							"Je tue a distance" + nomRaccourciClient(refRMI));
 					
 					logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
-							" tue � distance " + nomRaccourciClient(consoleAdv.getRefRMI()));
+							" tue a distance " + nomRaccourciClient(consoleAdv.getRefRMI()));
 				}
 				
 				res = true;
