@@ -1,12 +1,17 @@
 package utilitaires;
 
+import static utilitaires.Constantes.VISION;
+import static utilitaires.Constantes.XMAX_ARENE;
+import static utilitaires.Constantes.XMIN_ARENE;
+import static utilitaires.Constantes.YMAX_ARENE;
+import static utilitaires.Constantes.YMIN_ARENE;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
-import static utilitaires.Constantes.*;
 
 import serveur.element.Caracteristique;
 

@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.HashMap;
+
 import client.controle.IConsole;
 import serveur.element.Element;
 import serveur.element.personnages.Personnage;
