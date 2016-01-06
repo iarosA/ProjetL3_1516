@@ -9,6 +9,7 @@ import serveur.element.Caracteristique;
 import serveur.element.potions.Potion;
 import serveur.element.potions.PotionDeplacement;
 import serveur.element.potions.PotionInvincibilite;
+import serveur.element.potions.PotionParalysie;
 import serveur.element.potions.PotionPoison;
 import serveur.element.potions.PotionTeleportation;
 import serveur.vuelement.VuePersonnage;
@@ -53,6 +54,9 @@ public class Ramassage extends Interaction<VuePotion> {
 				}
 				else if (potion instanceof PotionPoison) {
 					arene.brulure(attaquant);
+				}
+				else if (potion instanceof PotionParalysie) {
+					arene.paralysie(attaquant);
 				}
 				else {
 
