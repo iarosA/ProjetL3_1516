@@ -248,26 +248,83 @@ public interface IArene extends Remote {
 	 */
 	public void lancePotion(Potion potion, Point position, String motDePasse) throws RemoteException;
 	
+	/**
+	 * Rafraichit le nombre de tour en deplacement accru pour le personnage reference par refRMI
+	 * @param refRMI La reference RMI du personnage
+	 * @throws RemoteException
+	 */
 	void subirDeplacementAccru(int refRMI) throws RemoteException;
 
+	/**
+	 * Rafraichit le nombre de tour en invincibilite pour le personnage reference par refRMI
+	 * @param refRMI La reference RMI du personnage
+	 * @throws RemoteException
+	 */
 	void subirInvincibilite(int refRMI) throws RemoteException;
 
+	/**
+	 * Rafraichit le nombre de tour en paralysie pour le personnage reference par refRMI
+	 * @param refRMI La reference RMI du personnage
+	 * @throws RemoteException
+	 */
 	void subirParalysie(int refRMI) throws RemoteException;
-
+	
+	/**
+	 * Rafraichit le nombre de tour en brulure pour le personnage reference par refRMI
+	 * @param refRMI La reference RMI du personnage
+	 * @throws RemoteException
+	 */
 	void subirBrulure(int refRMI) throws RemoteException;
 	
+	/**
+	 * teleporte le personnage vers un point de l'arene
+	 * @param refRMI La reference RMI du personnage
+	 * @param objectif La coordonnee du point de destination dans l'arene
+	 * @throws RemoteException
+	 */
 	public boolean teleport(int refRMI, Point objectif) throws RemoteException;
 
+	/**
+	 * teleporte le personnage vers un autre element
+	 * @param refRMI La reference RMI du personnage
+	 * @param refCible la reference RMI de l'element sur lequel le personnage va se teleporter
+	 * @throws RemoteException
+	 */
 	public boolean teleport(int refRMI, int refCible) throws RemoteException;
 
+	/**
+	 * lance l'effet de brulure sur le personnage reference par vuePersonnage
+	 * @param vuePersonnage la vue du personnage qui va subir la brulure
+	 * @throws RemoteException
+	 */
 	void brulure(VuePersonnage vuePersonnage) throws RemoteException;
 
+	/**
+	 * lance l'effet de paralysie sur le personnage reference par vuePersonnage
+	 * @param vuePersonnage la vue du personnage qui va subir la paralysie
+	 * @throws refCible la reference RMI de l'element sur lequel le personnage va se teleporter
+	 */
 	void paralysie(VuePersonnage vuePersonnage) throws RemoteException;
 
+	/**
+	 * lance l'effet d'invincibilite sur le personnage reference par vuePersonnage
+	 * @param vuePersonnage la vue du personnage qui va devenir invincible
+	 * @throws RemoteException
+	 */
 	void invincibilite(VuePersonnage vuePersonnage) throws RemoteException;
-
+	
+	/**
+	 * lance l'effet de deplacement accru sur le personnage reference par vuePersonnage
+	 * @param vuePersonnage la vue du personnage dont le deplacement va augmenter
+	 * @throws RemoteException
+	 */
 	void deplacemenAccru(VuePersonnage vuePersonnage) throws RemoteException;
 
+	/**
+	 * definit si le personnage reference par vueP a effectue une action ou non pour ce tour
+	 * @param vueP la vue du personnage concerne
+	 * @param b action effectuee ou non
+	 */
 	void setActionExecutee(VuePersonnage vueP, boolean b);
 }
 

@@ -27,6 +27,7 @@ public class StrategieBrute implements IStrategie{
 	protected int nbTours_paralysie = 0;
 	
 	protected boolean invincibiliteDeclenchee = false;
+	protected boolean invincibiliteTerminee = false;
 
 	/**
 	 * Cree un personnage, la console associe et sa strategie.
@@ -57,10 +58,13 @@ public class StrategieBrute implements IStrategie{
 		}
 	}
 
-	// TODO etablir une strategie afin d'evoluer dans l'arene de combat
-	// une proposition de strategie (simple) est donnee ci-dessous
+	
 	/** 
 	 * Decrit la strategie.
+	 * 
+	 * La brute peut lancer une attaque paralysante une fois tous les 5 tours
+	 * et lorsque sa vie descend a moins de 20 points, il devient invincible pendant NB_TOURS_INVINCIBILITE/2
+	 *  
 	 * Les methodes pour evoluer dans le jeu doivent etre les methodes RMI
 	 * de Arene et de ConsolePersonnage. 
 	 * @param voisins element voisins de cet element (elements qu'il voit)
@@ -85,7 +89,7 @@ public class StrategieBrute implements IStrategie{
 				
 				//si vie inferieure a 20, declenchement de l'invincibilite
 				if( !(this.invincibiliteDeclenchee) && console.getPersonnage().getCaract(Caracteristique.VIE) <= 20){
-					console.setPhrase("Je déclenche mon invincibilité");
+					console.setPhrase("Je declenche mon invincibilite");
 					arene.invincibilite((VuePersonnage)arene.vueFromRef(refRMI));
 					this.invincibiliteDeclenchee = true;
 				}
@@ -102,7 +106,7 @@ public class StrategieBrute implements IStrategie{
 					Element elemPlusProche = arene.elementFromRef(refCible);
 
 					if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
-						// j'interagis directement
+																				// j'interagis directement
 						if(elemPlusProche instanceof Potion) { // potion
 							// ramassage
 							console.setPhrase("Je ramasse une potion");
@@ -138,6 +142,12 @@ public class StrategieBrute implements IStrategie{
 						console.setPhrase("Je peux paralyser a nouveau");
 					}
 					else this.nbTours_paralysie++;
+				}
+				if(this.invincibiliteDeclenchee && !this.invincibiliteTerminee)
+				{
+					Personnage p = (Personnage)arene.elementFromRef(refRMI);
+					if(p.getNbToursInvincibilite()==Constantes.NB_TOURS_INVINCIBILITE/2)
+						p.setNbToursInvincibilite(Constantes.NB_TOURS_INVINCIBILITE);
 				}
 				arene.subirBrulure(refRMI);
 				arene.subirParalysie(refRMI);

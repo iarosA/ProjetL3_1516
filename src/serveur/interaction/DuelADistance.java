@@ -14,7 +14,7 @@ public class DuelADistance extends Interaction<VuePersonnage>{
 	
 	private boolean avecDef;
 	/**
-	 * Cree une interaction de duel.
+	 * Cree une interaction de duel a distance
 	 * @param arene arene
 	 * @param attaquant attaquant
 	 * @param defenseur defenseur

@@ -24,6 +24,8 @@ public class StrategieGrenadier implements IStrategie{
 
 	/**
 	 * Cree un personnage, la console associe et sa strategie.
+	 * 
+	 * 
 	 * @param ipArene ip de communication avec l'arene
 	 * @param port port de communication avec l'arene
 	 * @param ipConsole ip de la console du personnage
@@ -57,6 +59,10 @@ public class StrategieGrenadier implements IStrategie{
 	 * Decrit la strategie.
 	 * Les methodes pour evoluer dans le jeu doivent etre les methodes RMI
 	 * de Arene et de ConsolePersonnage. 
+	 * 
+	 * Le grenadier attaque au lance flamme lorsque l'adversaire est a moins de DISTANCE_MIN_INTERACTION * 3
+	 * si le personnage est a moins de DISTANCE_MIN_INTERACTION * 5, il lance une attaque a distance.
+	 * 
 	 * @param voisins element voisins de cet element (elements qu'il voit)
 	 * @throws RemoteException
 	 */

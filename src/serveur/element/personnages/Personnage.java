@@ -169,4 +169,13 @@ public class Personnage extends Element {
 		}
 		return false;
 	}
+	
+	public int getNbToursInvincibilite()
+	{
+		return this.nbToursInvincibilite;
+	}
+	public void  setNbToursInvincibilite(int n)
+	{
+		this.nbToursInvincibilite = n;
+	}
 }
