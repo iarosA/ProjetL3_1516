@@ -6,7 +6,7 @@ import java.util.HashMap;
 import logger.LoggerProjet;
 import serveur.IArene;
 import serveur.element.Caracteristique;
-import serveur.element.Potion;
+import serveur.element.potions.Potion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 

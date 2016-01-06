@@ -6,6 +6,11 @@ import java.util.logging.Level;
 
 import serveur.Arene;
 import serveur.element.Caracteristique;
+import serveur.element.potions.Potion;
+import serveur.element.potions.PotionDeplacement;
+import serveur.element.potions.PotionInvincibilite;
+import serveur.element.potions.PotionPoison;
+import serveur.element.potions.PotionTeleportation;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 import utilitaires.Constantes;
@@ -34,12 +39,29 @@ public class Ramassage extends Interaction<VuePotion> {
 			
 			// si le personnage est vivant
 			if(attaquant.getElement().estVivant()) {
-
-				// caracteristiques de la potion
-				HashMap<Caracteristique, Integer> valeursPotion = defenseur.getElement().getCaracts();
 				
-				for(Caracteristique c : valeursPotion.keySet()) {
-					arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
+				Potion potion = defenseur.getElement();
+				
+				if (potion instanceof PotionDeplacement) {
+					arene.deplacemenAccru(attaquant);
+				}
+				else if (potion instanceof PotionInvincibilite) {
+					arene.invincibilite(attaquant);
+				}
+				else if (potion instanceof PotionTeleportation) {
+					arene.teleport(attaquant.getRefRMI(), 0);
+				}
+				else if (potion instanceof PotionPoison) {
+					arene.brulure(attaquant);
+				}
+				else {
+
+					// caracteristiques de la potion
+					HashMap<Caracteristique, Integer> valeursPotion = defenseur.getElement().getCaracts();
+					
+					for(Caracteristique c : valeursPotion.keySet()) {
+						arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
+					}
 				}
 				
 				logs(Level.INFO, "Potion bue !");

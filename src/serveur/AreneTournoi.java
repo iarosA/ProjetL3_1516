@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 import client.controle.IConsole;
 import logger.LoggerProjet;
-import serveur.element.Potion;
 import serveur.element.personnages.Personnage;
+import serveur.element.potions.Potion;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 import utilitaires.Constantes;

@@ -2,7 +2,7 @@ package serveur.vuelement;
 
 import java.awt.Point;
 
-import serveur.element.Potion;
+import serveur.element.potions.Potion;
 
 /**
  * Donnees que le serveur doit conserver sur chacun de ces clients potions.

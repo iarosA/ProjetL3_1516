@@ -9,8 +9,8 @@ import logger.LoggerProjet;
 import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
-import serveur.element.Potion;
 import serveur.element.personnages.Cavalier;
+import serveur.element.potions.Potion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -110,7 +110,7 @@ public class StrategieCavalier implements IStrategie{
 
 				} else { // personnage
 					// duel
-					console.setPhrase("Je brûle " + elemPlusProche.getNom());
+					console.setPhrase("Je brï¿½le " + elemPlusProche.getNom());
 					arene.lanceAttaqueBrulante(refRMI, refCible);
 				}
 				

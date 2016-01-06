@@ -9,8 +9,8 @@ import logger.LoggerProjet;
 import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
-import serveur.element.Potion;
 import serveur.element.personnages.Grenadier;
+import serveur.element.potions.Potion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 

@@ -19,8 +19,8 @@ import client.controle.IConsole;
 import logger.LoggerProjet;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
-import serveur.element.Potion;
 import serveur.element.personnages.Personnage;
+import serveur.element.potions.Potion;
 import serveur.interaction.Deplacement;
 import serveur.interaction.Duel;
 import serveur.interaction.DuelADistance;
@@ -901,10 +901,10 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 					console.log(Level.INFO, Constantes.nomClasse(this), 
 							"Je brule au lance-flamme" + nomRaccourciClient(refRMIAdv));
 					consoleAdv.log(Level.INFO, Constantes.nomClasse(this), 
-							"Je me fait br�ler au lance flamme par " + nomRaccourciClient(refRMI));
+							"Je me fait bruler au lance flamme par " + nomRaccourciClient(refRMI));
 					
 					logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
-							" br�le" + nomRaccourciClient(consoleAdv.getRefRMI()));
+							" brule" + nomRaccourciClient(consoleAdv.getRefRMI()));
 			
 					new DuelBrulant(this, client, clientAdv).interagit();
 					personnages.get(refRMI).executeAction();
@@ -1112,6 +1112,20 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		}
 	}
 	
+	public void brulure(VuePersonnage vuePersonnage) throws RemoteException {
+		
+		int refRMI = vuePersonnage.getRefRMI();
+		IConsole console = consoleFromRef(refRMI);
+		Personnage pers = vuePersonnage.getElement();
+		
+		// increment de la caracteristique
+		pers.brulure();
+		
+		if(pers.estVivant()) {
+			console.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis en feu !!!");				
+		}
+	}
+	
 	@Override
 	public void subirBrulure(int refRMI) throws RemoteException {
 		Personnage pers = (Personnage)elementFromRef(refRMI);
@@ -1123,12 +1137,26 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 					cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, j'ai perdu " + Constantes.EFFET_BRULURE + " points de br�lure.");		
 				}
 				else
-					cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort de mes br�lures");
+					cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort de mes brulures");
 			}
 			else {
-				cons.log(Level.INFO, Constantes.nomClasse(this), "Mon invuln�rabilit� me fait r�sister � ma br�lure.");
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Mon invulnerabilite me fait resister a ma br�lure.");
 			}
-			cons.setPhrase("Je souffre de ma brul�re..");
+			cons.setPhrase("Je souffre de ma brulure..");
+		}
+	}
+	
+	public void paralysie(VuePersonnage vuePersonnage) throws RemoteException {
+		
+		int refRMI = vuePersonnage.getRefRMI();
+		IConsole console = consoleFromRef(refRMI);
+		Personnage pers = vuePersonnage.getElement();
+		
+		// increment de la caracteristique
+		pers.paralysie();
+		
+		if(pers.estVivant()) {
+			console.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis paralyse !!!");				
 		}
 	}
 	
@@ -1139,11 +1167,25 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		if (pers.subirParalysie())
 		{
 			if(pers.estVivant()) {
-				cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis paralys� ");		
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis paralyse ");		
 			}
 			else
-				cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort paralys�");
-			cons.setPhrase("Je suis paralys�, je ne peux plus me deplacer..");
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort paralyse");
+			cons.setPhrase("Je suis paralyse, je ne peux plus me deplacer..");
+		}
+	}
+
+	public void invincibilite(VuePersonnage vuePersonnage) throws RemoteException {
+		
+		int refRMI = vuePersonnage.getRefRMI();
+		IConsole console = consoleFromRef(refRMI);
+		Personnage pers = vuePersonnage.getElement();
+		
+		// increment de la caracteristique
+		pers.invincibilite();
+		
+		if(pers.estVivant()) {
+			console.log(Level.INFO, Constantes.nomClasse(this), "Yeah, je suis invincible !!!");				
 		}
 	}
 
@@ -1160,6 +1202,20 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		}
 	}
 	
+	public void deplacemenAccru(VuePersonnage vuePersonnage) throws RemoteException {
+		
+		int refRMI = vuePersonnage.getRefRMI();
+		IConsole console = consoleFromRef(refRMI);
+		Personnage pers = vuePersonnage.getElement();
+		
+		// increment de la caracteristique
+		pers.deplacementAccru();
+		
+		if(pers.estVivant()) {
+			console.log(Level.INFO, Constantes.nomClasse(this), "Waouh, je me deplace plus vite !!!");				
+		}
+	}
+	
 	@Override
 	public void subirDeplacementAccru(int refRMI) throws RemoteException {
 		Personnage pers = (Personnage)elementFromRef(refRMI);
@@ -1172,33 +1228,6 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		}
 	}
 	
-	public void brulure(VuePersonnage vuePersonnage) throws RemoteException {
-		
-		int refRMI = vuePersonnage.getRefRMI();
-		IConsole console = consoleFromRef(refRMI);
-		Personnage pers = vuePersonnage.getElement();
-		
-		// increment de la caracteristique
-		pers.brulure();
-		
-		if(pers.estVivant()) {
-			console.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis en feu !!!");				
-		}
-	}
-	
-	public void paralysie(VuePersonnage vuePersonnage) throws RemoteException {
-		
-		int refRMI = vuePersonnage.getRefRMI();
-		IConsole console = consoleFromRef(refRMI);
-		Personnage pers = vuePersonnage.getElement();
-		
-		// increment de la caracteristique
-		pers.paralysie();
-		
-		if(pers.estVivant()) {
-			console.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis paralys� !!!");				
-		}
-	}
 	
 	public LoggerProjet getLogger() {
 		return logger;

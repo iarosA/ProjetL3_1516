@@ -7,8 +7,8 @@ import java.util.HashMap;
 
 import client.controle.IConsole;
 import serveur.element.Element;
-import serveur.element.Potion;
 import serveur.element.personnages.Personnage;
+import serveur.element.potions.Potion;
 import serveur.vuelement.VueElement;
 
 /**
