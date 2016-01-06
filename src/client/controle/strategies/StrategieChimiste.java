@@ -86,11 +86,11 @@ public class StrategieChimiste implements IStrategie{
 		switch(choixPotion){
 		case 1:
 			console.setPhrase("Je depose du poison");
-			arene.ajoutePotion(new PotionPoison("Poison", "G13", new HashMap<Caracteristique, Integer>()), arene.getPosition(refRMI));
+			arene.ajoutePotion(new PotionPoison("Poison", "G13", new HashMap<Caracteristique, Integer>()), position);
 			break;
 		case 2:
 			console.setPhrase("Je depose une potion de paralysie");
-			arene.ajoutePotion(new PotionParalysie("Potion de Paralysie", "G13", new HashMap<Caracteristique, Integer>()), arene.getPosition(refRMI));
+			arene.ajoutePotion(new PotionParalysie("Potion de Paralysie", "G13", new HashMap<Caracteristique, Integer>()), position);
 			break;
 		case 3:
 			console.setPhrase("Je depose une potion de teleportation");
