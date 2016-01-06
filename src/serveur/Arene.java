@@ -1238,7 +1238,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	}
 	
 	@Override
-	public void setActionExecutee(VuePersonnage vueP, boolean b)
+	public void setActionExecutee(VuePersonnage vueP, boolean b) throws RemoteException
 	{
 		vueP.setActionExecutee(b);
 	}

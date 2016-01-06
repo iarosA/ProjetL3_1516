@@ -325,6 +325,6 @@ public interface IArene extends Remote {
 	 * @param vueP la vue du personnage concerne
 	 * @param b action effectuee ou non
 	 */
-	void setActionExecutee(VuePersonnage vueP, boolean b);
+	void setActionExecutee(VuePersonnage vueP, boolean b) throws RemoteException;
 }
 
