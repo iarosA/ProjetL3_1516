@@ -1112,6 +1112,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		}
 	}
 	
+	@Override
 	public void brulure(VuePersonnage vuePersonnage) throws RemoteException {
 		
 		int refRMI = vuePersonnage.getRefRMI();
@@ -1146,6 +1147,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		}
 	}
 	
+	@Override
 	public void paralysie(VuePersonnage vuePersonnage) throws RemoteException {
 		
 		int refRMI = vuePersonnage.getRefRMI();
@@ -1175,6 +1177,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		}
 	}
 
+	@Override
 	public void invincibilite(VuePersonnage vuePersonnage) throws RemoteException {
 		
 		int refRMI = vuePersonnage.getRefRMI();
@@ -1202,6 +1205,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		}
 	}
 	
+	@Override
 	public void deplacemenAccru(VuePersonnage vuePersonnage) throws RemoteException {
 		
 		int refRMI = vuePersonnage.getRefRMI();

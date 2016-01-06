@@ -9,6 +9,7 @@ import serveur.element.Element;
 import serveur.element.personnages.Personnage;
 import serveur.element.potions.Potion;
 import serveur.vuelement.VueElement;
+import serveur.vuelement.VuePersonnage;
 
 /**
  * Definit les methodes qui pourront s'appliquer a l'arene par le reseau.
@@ -257,5 +258,13 @@ public interface IArene extends Remote {
 	public boolean teleport(int refRMI, Point objectif) throws RemoteException;
 
 	public boolean teleport(int refRMI, int refCible) throws RemoteException;
+
+	void brulure(VuePersonnage vuePersonnage) throws RemoteException;
+
+	void paralysie(VuePersonnage vuePersonnage) throws RemoteException;
+
+	void invincibilite(VuePersonnage vuePersonnage) throws RemoteException;
+
+	void deplacemenAccru(VuePersonnage vuePersonnage) throws RemoteException;
 }
 
