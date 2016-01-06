@@ -107,15 +107,12 @@ public class StrategieAssassin implements IStrategie{
 					// je vais vers le plus proche
 				if(nbTours_Teleport==0 && elemPlusProche instanceof Personnage)
 				{
-									//lorque l'adversaire est hors de portée et que la 
+									//lorque l'adversaire est hors de portee et que la 
 									//teleportation a fini de charger, l'assassin se teleporte
 									//et effectue une attaque simultanement ne prenant pas en compte la defense
 									//de l'adversaire.
 					console.setPhrase("Je me deplace furtivement dans le dos de" + elemPlusProche.getNom());
 					arene.teleport(refRMI, refCible);
-					this.nbTours_Teleport = 1;
-					VuePersonnage moi = (VuePersonnage)arene.vueFromRef(refRMI);
-					arene.setActionExecutee(moi, false);
 					console.setPhrase("J'attaque furtivement " + elemPlusProche.getNom());
 					arene.lanceAttaque(refRMI, refCible, false);
 				}

@@ -12,6 +12,7 @@ import serveur.element.personnages.Chimiste;
 import serveur.element.potions.PotionParalysie;
 import serveur.element.potions.PotionPoison;
 import serveur.element.potions.PotionTeleportation;
+import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
 
 public class StrategieChimiste implements IStrategie{
@@ -77,6 +78,9 @@ public class StrategieChimiste implements IStrategie{
 		
 		arene.teleport(refRMI, 0);
 		console.setPhrase("Je me teleporte");
+		
+		VuePersonnage moi = (VuePersonnage) arene.vueFromRef(refRMI);
+		moi.executeAction();
 		
 		int choixPotion = Calculs.nombreAleatoire(1, 3);
 		

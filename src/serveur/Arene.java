@@ -1028,7 +1028,6 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		} else {
 			// sinon, on tente de jouer l'interaction
 			new Deplacement(client, getVoisins(refRMI)).seTeleporteVers(refCible);
-			client.executeAction();
 			
 			res = true;
 		}
@@ -1048,7 +1047,6 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		} else {
 			// sinon, on tente de jouer l'interaction
 			new Deplacement(client, getVoisins(refRMI)).seDirigeVers(objectif, distance);
-			client.executeAction();
 
 			res = true;
 		}
