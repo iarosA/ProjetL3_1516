@@ -8,6 +8,7 @@ import java.util.HashMap;
 import client.controle.strategies.StrategieAssassin;
 import client.controle.strategies.StrategieBrute;
 import client.controle.strategies.StrategieCavalier;
+import client.controle.strategies.StrategieChimiste;
 import client.controle.strategies.StrategieGrenadier;
 import client.controle.strategies.StrategiePersonnage;
 import client.controle.strategies.StrategieSniper;
@@ -104,6 +105,10 @@ public class LancePersonnage {
 			else if (args[i_persoArgs].equals("Cavalier")) {
 				new StrategieCavalier(ipArene, port, ipConsole, "Cavalier", groupe, caracts, nbTours, position, logger);
 				logger.info("Lanceur", "Creation d'un cavalier reussie");
+			}
+			else if (args[i_persoArgs].equals("Chimiste")) {
+				new StrategieChimiste(ipArene, port, ipConsole, "Chimiste", groupe, caracts, nbTours, position, logger);
+				logger.info("Lanceur", "Creation d'un chimiste reussie");
 			}
 			else if (args[i_persoArgs].equals("Grenadier")) {
 				new StrategieGrenadier(ipArene, port, ipConsole, "Grenadier", groupe, caracts, nbTours, position, logger);
