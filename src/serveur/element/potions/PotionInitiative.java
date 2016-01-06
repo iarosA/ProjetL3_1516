@@ -4,9 +4,13 @@ import java.util.HashMap;
 
 import serveur.element.Caracteristique;
 
-public class PotionInitiative extends Potion{
-private static final long serialVersionUID = 1L;
+public class PotionInitiative extends Potion {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructeur d'une potion avec un nom, le groupe qui l'a envoyee et ses 
 	 * caracteristiques (ajoutees lorsqu'un Personnage ramasse cette potion).
@@ -18,9 +22,9 @@ private static final long serialVersionUID = 1L;
 		super(nom, groupe, caracts);
 		this.caracts.put(Caracteristique.VIE, 0);
 		this.caracts.put(Caracteristique.FORCE, 0);
-		this.caracts.put(Caracteristique.INITIATIVE, 10);
+		this.caracts.put(Caracteristique.INITIATIVE, 50);
 		this.caracts.put(Caracteristique.DEFENSE, 0);
-		this.caracts.put(Caracteristique.DEPLACEMENT, 2);
+		this.caracts.put(Caracteristique.DEPLACEMENT, 0);
 		
 	}
 }

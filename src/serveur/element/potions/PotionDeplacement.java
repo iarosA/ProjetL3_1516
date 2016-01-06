@@ -4,9 +4,13 @@ import java.util.HashMap;
 
 import serveur.element.Caracteristique;
 
-public class PotionDeplacement extends Potion{
-private static final long serialVersionUID = 1L;
+public class PotionDeplacement extends Potion {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructeur d'une potion avec un nom, le groupe qui l'a envoyee et ses 
 	 * caracteristiques (ajoutees lorsqu'un Personnage ramasse cette potion).
