@@ -106,6 +106,10 @@ public class VuePersonnage extends VueElement<Personnage> implements Comparable<
 	public void setTourMort(int tourMort) {
 		this.tourMort = tourMort;
 	}
+	
+	public void setActionExecutee(boolean b) {
+		this.actionExecutee = b;
+	}
 
 	@Override
 	public int compareTo(VuePersonnage vp2) {
