@@ -3,6 +3,7 @@ package client.controle.strategies;
 import java.awt.Point;
 import java.rmi.RemoteException;
 import java.util.HashMap;
+import java.util.Hashtable;
 
 import client.controle.Console;
 import logger.LoggerProjet;
@@ -12,6 +13,8 @@ import serveur.element.Element;
 import serveur.element.personnages.Chimiste;
 import serveur.element.personnages.Personnage;
 import serveur.element.potions.Potion;
+import serveur.element.potions.PotionPoison;
+import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -76,50 +79,22 @@ public class StrategieChimiste implements IStrategie{
 			e.printStackTrace();
 		}
 		
-		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
-			console.setPhrase("J'erre...");
-			arene.deplace(refRMI, 0, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT)); 
-			
-		} else {
-			int refCible = Calculs.chercheElementProche(position, voisins);
-			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
-
-			Element elemPlusProche = arene.elementFromRef(refCible);
-			
-			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
-				// j'interagis directement
-				if (elemPlusProche instanceof Potion) { // potion
-					// ramassage
-					console.setPhrase("Je ramasse une potion");
-					arene.ramassePotion(refRMI, refCible);
-
-				} else { // personnage
-					// duel
-					console.setPhrase("Coup d'epee a " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible, true);
-				}
-				
-			}
-			else if (distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION * 3) { // si suffisamment proches
-				// j'interagis directement
-				if (elemPlusProche instanceof Personnage) 
-				{ 
-					// personnage
-					// duel a distance a l'arc
-					console.setPhrase("Je sors mon arc et je vise " + elemPlusProche.getNom());
-					arene.lanceAttaqueADist(refRMI, refCible, true);
-				} 
-				else 
-				{ 
-					console.setPhrase("Je sors mon arc et je vise " + elemPlusProche.getNom());
-					arene.lanceAttaqueADist(refRMI, refCible, true);
-				}
-				
-			} else { // si voisins, mais plus eloignes
-				// je vais vers le plus proche
-				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
-				arene.deplace(refRMI, refCible, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT));
-			}
+		arene.teleport(refRMI, 0);
+		console.setPhrase("Je me teleporte");
+		VuePersonnage moi = (VuePersonnage) arene.vueFromRef(refRMI);
+		arene.setActionExecutee(moi, false);
+		
+		int choixPotion = Calculs.nombreAleatoire(1, 2);
+		
+		switch(choixPotion){
+		case 1:
+			console.setPhrase("Je depose du poison");
+			arene.ajoutePotion(new PotionPoison("Poison", "G13", new HashMap<Caracteristique, Integer>()), arene.getPosition(refRMI));
+			break;
+		case 2:
+			console.setPhrase("Je depose une potion de paralysie");
+			arene.ajoutePotion(new PotionParalysie("Potion de Paralysie", "G13", new HashMap<Caracteristique, Integer>()), arene.getPosition(refRMI));
+			break;
 		}
 		arene.subirBrulure(refRMI);
 		arene.subirParalysie(refRMI);
