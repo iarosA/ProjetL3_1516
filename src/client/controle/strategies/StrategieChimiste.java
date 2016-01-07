@@ -122,13 +122,13 @@ public class StrategieChimiste implements IStrategie{
 			try {
 				switch(choixPotion){
 				case 1:
-					arene.ajoutePotion(new PotionPoison("Arsenic", "Chimiste", new HashMap<Caracteristique, Integer>()), position);
+					arene.ajoutePotion(new PotionPoison("Arsenic", "Chimiste"), position);
 					break;
 				case 2:
-					arene.ajoutePotion(new PotionParalysie("Gel", "Chimiste", new HashMap<Caracteristique, Integer>()), position);
+					arene.ajoutePotion(new PotionParalysie("Gel", "Chimiste"), position);
 					break;
 				case 3:
-					arene.ajoutePotion(new PotionTeleportation("Vortex", "Chimiste", new HashMap<Caracteristique, Integer>()), position);
+					arene.ajoutePotion(new PotionTeleportation("Vortex", "Chimiste"), position);
 					break;
 				}
 			} catch (RemoteException e) {

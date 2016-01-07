@@ -100,35 +100,35 @@ public class LancePotion {
 			else {
 				//Sinon on lance la potion passee en argument
 				if (args[i_potionArgs].equals("Soin")) {
-					arene.ajoutePotion(new PotionVie("Soin", groupe, caractsPotion), position);
+					arene.ajoutePotion(new PotionVie("Soin", groupe), position);
 					logger.info("Lanceur", "Lancement de la potion soin reussi");
 				}
 				else if (args[i_potionArgs].equals("Rage")) {
-					arene.ajoutePotion(new PotionForce("Rage", groupe, caractsPotion), position);
+					arene.ajoutePotion(new PotionForce("Rage", groupe), position);
 					logger.info("Lanceur", "Lancement de la potion rage reussi");
 				}
 				else if (args[i_potionArgs].equals("Cola")) {
-					arene.ajoutePotion(new PotionInitiative("Cola", groupe, caractsPotion), position);
+					arene.ajoutePotion(new PotionInitiative("Cola", groupe), position);
 					logger.info("Lanceur", "Lancement de la potion cola reussi");
 				}
 				else if (args[i_potionArgs].equals("7Lieues")) {
-					arene.ajoutePotion(new PotionDeplacement("7Lieues", groupe, caractsPotion), position);
+					arene.ajoutePotion(new PotionDeplacement("7Lieues", groupe), position);
 					logger.info("Lanceur", "Lancement de la potion 7lieues reussi");
 				}
 				else if (args[i_potionArgs].equals("Gel")) {
-					arene.ajoutePotion(new PotionParalysie("Gel", groupe, caractsPotion), position);
+					arene.ajoutePotion(new PotionParalysie("Gel", groupe), position);
 					logger.info("Lanceur", "Lancement de la potion gel reussi");
 				}
 				else if (args[i_potionArgs].equals("Arsenic")) {
-					arene.ajoutePotion(new PotionPoison("Arsenic", groupe, caractsPotion), position);
+					arene.ajoutePotion(new PotionPoison("Arsenic", groupe), position);
 					logger.info("Lanceur", "Lancement de la potion arsenic reussi");
 				}
 				else if (args[i_potionArgs].equals("Vortex")) {
-					arene.ajoutePotion(new PotionTeleportation("Vortex", groupe, caractsPotion), position);
+					arene.ajoutePotion(new PotionTeleportation("Vortex", groupe), position);
 					logger.info("Lanceur", "Lancement de la potion vortex reussi");
 				}
 				else if (args[i_potionArgs].equals("Carapace")) {
-					arene.ajoutePotion(new PotionInvincibilite("Carapace", groupe, caractsPotion), position);
+					arene.ajoutePotion(new PotionInvincibilite("Carapace", groupe), position);
 					logger.info("Lanceur", "Lancement de la potion carapace reussi");
 				}
 				else if (args[i_potionArgs].equals("Potion")) {
