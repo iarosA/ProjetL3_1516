@@ -166,15 +166,16 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
-		if (source == this.persoM) {
+		if (source == this.persoM) { //Perso-
 			this.i_perso--;
 		}
 		////////////////////////////
-		else if (source == this.persoP) {
+		else if (source == this.persoP) { //Perso+
 			this.i_perso++;
 		}
 		////////////////////////////
-		else if (source == this.launchPerso) {
+		else if (source == this.launchPerso) {  //Lancement perso
+			//on verfifie que le serveur soit lance
 			if(!this.estLance) {
 				this.message = "Lancez d'abord l'arene et l'IHM..";
 			}
@@ -184,15 +185,16 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 			}
 		}
 		////////////////////////////
-		else if (source == this.potionM) {
+		else if (source == this.potionM) { //Potion-
 			this.i_potion--;
 		}
 		////////////////////////////
-		else if (source == this.potionP) {
+		else if (source == this.potionP) { //Potion+
 			this.i_potion++;
 		}
 		////////////////////////////
-		else if (source == this.launchPotion) {
+		else if (source == this.launchPotion) { //Lancement potion
+			//on verfifie que le serveur soit lance
 			if(!this.estLance) {
 				this.message = "Lancez d'abord l'arene et l'IHM..";
 			}
@@ -202,7 +204,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 			}
 		}
 		////////////////////////////
-		else if (source == this.launchAreneIHM) {
+		else if (source == this.launchAreneIHM) { //Lancement arene et ihm
 			if (!this.estLance) {
 				//si pas lance on lance l'arene
 				this.areneThread = new ThreadArene();
@@ -228,6 +230,9 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	
 	
 	// THREADS
+	/**
+	 * Lance une arene locale
+	 */
 	private class ThreadArene extends Thread {
 		public ThreadArene() {
 			super();
@@ -237,6 +242,10 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 			LanceArene.main(new String[0]);
 		}
 	}
+	
+	/**
+	 * Lance un ihm pour visualiser l'arene
+	 */
 	private class ThreadIHM extends Thread {
 		public ThreadIHM() {
 			super();
@@ -247,9 +256,17 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 			LanceIHM.main(new String[0]);
 		}
 	}
+	
+	/**
+	 * Lance un personnage sur une arene locale
+	 */
 	private class ThreadPerso extends Thread {
-		private String classePerso;
+		private String classePerso; //type de perso choisi
 		
+		/**
+		 * Constructeur
+		 * @param classePerso : le type de personnage a instancier
+		 */
 		public ThreadPerso(String classePerso) {
 			super();
 			this.classePerso = classePerso;
@@ -262,9 +279,17 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 			LancePersonnage.main(args);
 		}
 	}
+	
+	/**
+	 * Lance une potion sur une arene locale
+	 */
 	private class ThreadPotion extends Thread {
-		private String classePotion;
-		
+		private String classePotion; //type de potion choisie
+
+		/**
+		 * Constructeur
+		 * @param classePerso : le type de potion a instancier
+		 */
 		public ThreadPotion(String classePotion) {
 			super();
 			this.classePotion = classePotion;
@@ -277,6 +302,11 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Teste si le nom est contenu dans classesPerso
+	 * @param nom : nom a tester
+	 * @return true si le nom est contenu dans classesPerso
+	 */
 	public static boolean existeClassePerso(String nom) {
 		for (String s : classesPerso) {
 			if (s.equals(nom)) return true;
@@ -284,6 +314,11 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		return false;
 	}
 	
+	/**
+	 * Teste si le nom est contenu dans classesPotion
+	 * @param nom : nom a tester
+	 * @return true si le nom est contenu dans classesPotion
+	 */
 	public static boolean existeClassePotion(String nom) {
 		for (String s : classesPotion) {
 			if (s.equals(nom)) return true;

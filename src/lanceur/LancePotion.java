@@ -27,6 +27,7 @@ public class LancePotion {
 		
 		String groupe = "G13"; 
 		
+		//indice du nom de potion dans les arguments
 		int i_potionArgs = 0;
 		
 		// init des arguments
@@ -54,10 +55,12 @@ public class LancePotion {
 						ipArene = args[1];
 					else i_potionArgs = 1;
 				}
-				if (args.length > 2) {
-					i_potionArgs = 2;
+				else {
+					if (args.length > 2) {
+						i_potionArgs = 2;
+					}
+					else i_potionArgs = -1;
 				}
-				else i_potionArgs = -1;
 			}
 		}
 		else {
@@ -88,12 +91,14 @@ public class LancePotion {
 			caractsPotion.put(Caracteristique.INITIATIVE, Calculs.valeurCaracAleatoirePosNeg(Caracteristique.INITIATIVE));
 			
 			Point position = Calculs.positionAleatoireArene();
+			
+			//Par defaut on lance un potion aleatoire
 			if (i_potionArgs == -1) {
 				arene.ajoutePotion(new Potion("Potion", groupe, caractsPotion), position);
 				logger.info("Lanceur", "Lancement de la potion reussi");
 			}
 			else {
-				// ajout de la potion
+				//Sinon on lance la potion passee en argument
 				if (args[i_potionArgs].equals("Soin")) {
 					arene.ajoutePotion(new PotionVie("Soin", groupe, caractsPotion), position);
 					logger.info("Lanceur", "Lancement de la potion soin reussi");

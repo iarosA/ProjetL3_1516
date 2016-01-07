@@ -6,9 +6,9 @@ package lanceur;
 import javax.swing.SwingUtilities;
 
 /**
- * @author iA
- *
+ * Lance une fenetre de lanceur version locale
  */
+
 public class LanceurLocal {
 	public static void main(String[] args){
 		SwingUtilities.invokeLater(new Runnable(){
