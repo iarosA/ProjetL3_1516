@@ -1028,8 +1028,12 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 			
 		} else {
 			// sinon, on tente de jouer l'interaction
-			new Deplacement(client, getVoisins(refRMI)).seTeleporteVers(refCible);
-			
+			if (refCible <= 0) {
+				new Deplacement(client, getVoisins(refRMI)).seTeleporteVers(refCible, null);
+			}
+			else {
+				new Deplacement(client, getVoisins(refRMI)).seTeleporteVers(refCible, getVoisins(refCible));
+			}
 			res = true;
 		}
 		
@@ -1068,7 +1072,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 			
 		} else {
 			// sinon, on tente de jouer l'interaction
-			new Deplacement(client, getVoisins(refRMI)).seTeleporteVers(objectif);
+			new Deplacement(client, getVoisins(refRMI)).seTeleporteVers(objectif, null);
 			
 			res = true;
 		}
@@ -1134,13 +1138,13 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		{
 			if (pers.getCaract(Caracteristique.DEFENSE) != 100) {
 				if(pers.estVivant()) {
-					cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, j'ai perdu " + Constantes.EFFET_BRULURE + " points de br�lure.");		
+					cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, j'ai perdu " + Constantes.EFFET_BRULURE + " points de brulure.");		
 				}
 				else
 					cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort de mes brulures");
 			}
 			else {
-				cons.log(Level.INFO, Constantes.nomClasse(this), "Mon invulnerabilite me fait resister a ma br�lure.");
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Mon invulnerabilite me fait resister a ma brulure.");
 			}
 			cons.setPhrase("Je souffre de ma brulure..");
 		}
@@ -1168,10 +1172,10 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		if (pers.subirParalysie())
 		{
 			if(pers.estVivant()) {
-				cons.log(Level.INFO, Constantes.nomClasse(this), "Ouch, je suis paralyse ");		
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Je reste paralyse..");		
 			}
 			else
-				cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort paralyse");
+				cons.log(Level.INFO, Constantes.nomClasse(this), "Je suis mort paralyse.");
 			cons.setPhrase("Je suis paralyse, je ne peux plus me deplacer..");
 		}
 	}

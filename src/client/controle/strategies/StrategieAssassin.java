@@ -12,7 +12,6 @@ import serveur.element.Element;
 import serveur.element.personnages.Assassin;
 import serveur.element.personnages.Personnage;
 import serveur.element.potions.Potion;
-import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -105,7 +104,8 @@ public class StrategieAssassin implements IStrategie{
 				
 			} else { // si voisins, mais plus eloignes
 					// je vais vers le plus proche
-				if(nbTours_Teleport==0 && elemPlusProche instanceof Personnage)
+				if(nbTours_Teleport == 0 && elemPlusProche instanceof Personnage
+						&& console.getPersonnage().getNbToursParalysie() == 0)
 				{
 									//lorque l'adversaire est hors de portee et que la 
 									//teleportation a fini de charger, l'assassin se teleporte
@@ -115,6 +115,7 @@ public class StrategieAssassin implements IStrategie{
 					arene.teleport(refRMI, refCible);
 					console.setPhrase("J'attaque furtivement " + elemPlusProche.getNom());
 					arene.lanceAttaque(refRMI, refCible, false);
+					this.nbTours_Teleport = 1;
 				}
 				else
 				{

@@ -178,4 +178,7 @@ public class Personnage extends Element {
 	{
 		this.nbToursInvincibilite = n;
 	}
+	public int getNbToursParalysie() {
+		return this.nbToursParalysie;
+	}
 }

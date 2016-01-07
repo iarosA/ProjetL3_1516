@@ -50,7 +50,9 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	
 	private boolean estLance = false; //arène et IHM lancé?
 
+	@SuppressWarnings("unused")
 	private ThreadArene areneThread = null; //thread pour l'arene
+	@SuppressWarnings("unused")
 	private ThreadIHM IHMThread = null; //thread pour l'IHM
 
 	

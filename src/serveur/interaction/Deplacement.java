@@ -2,6 +2,7 @@ package serveur.interaction;
 
 import java.awt.Point;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import serveur.vuelement.VuePersonnage;
@@ -94,7 +95,7 @@ public class Deplacement {
 	 * sinon il va vers le voisin correspondant (s'il existe dans les voisins).
 	 * @param refObjectif reference de l'element cible
 	 */  
-	public void seTeleporteVers(int refObjectif) throws RemoteException {
+	public void seTeleporteVers(int refObjectif, HashMap<Integer, Point> voisinsDest) throws RemoteException {
 		Point pvers;
 
 		// on ne bouge que si la reference n'est pas la notre
@@ -104,16 +105,12 @@ public class Deplacement {
 			// le personnage erre
 			if (refObjectif <= 0) { 
 				pvers = Calculs.positionAleatoireArene();
-						
+				seTeleporteVers(pvers, null);
 			} else { 
 				// sinon :
 				// la cible devient le point sur lequel se trouve l'element objectif
 				pvers = voisins.get(refObjectif);
-			}
-	
-			// on ne bouge que si l'element existe
-			if(pvers != null) {
-				seTeleporteVers(pvers);
+				seTeleporteVers(pvers, voisinsDest);
 			}
 		}
 	}
@@ -123,11 +120,37 @@ public class Deplacement {
 	 * @param objectif case cible
 	 * @throws RemoteException
 	 */
-	public void seTeleporteVers(Point objectif) throws RemoteException {
+	public void seTeleporteVers(Point objectif, HashMap<Integer, Point> voisinsDest) throws RemoteException {
 		Point cible = Calculs.restreintPositionArene(objectif); 
-		
-		if(cible != null) {
+		if (voisinsDest == null) {
 			personnage.setPosition(cible);
+		}
+		else {
+			Point dest = null;
+			ArrayList<Point> listePossibles = new ArrayList<Point>();		
+			
+			Point tempPoint;
+			
+			for (int i = -1; i <= 1; i++) {
+				for (int j = -1; j <= 1; j++) {
+					if ((i != 0) || (j != 0))  { // pas le point lui-meme
+						tempPoint = new Point(objectif.x + i, objectif.y + j);
+						if(Calculs.estDansArene(tempPoint)) {
+							listePossibles.add(tempPoint);
+						}
+					}
+				}
+			}
+			
+			for (Point p : listePossibles) {
+				if (Calculs.caseVide(p, voisinsDest)) {
+					dest = p;
+					break;
+				}
+			}
+			if (dest == null) dest = Calculs.positionAleatoireArene();
+		
+			personnage.setPosition(dest);
 		}
 	}
 
