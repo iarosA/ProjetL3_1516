@@ -28,7 +28,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	private JPanel panel = new JPanel(); //panel principal
 	
 	public static String[] classesPerso = {"Personnage", "Assassin", "Brute", "Cavalier", "Chimiste", "Grenadier", "Sniper"};
-	public static String[] classesPotion = {"Potion", "Soin", "Steroides", "Cola", "7Lieues", "Ketamine", "Arsenic", "LSD", "PCP"};
+	public static String[] classesPotion = {"Potion", "Arsenic", "Carapace", "Cola", "Gel", "Rage", "Soin", "Vortex", "7Lieues"};
 	
 	private int i_perso = 0; //indice personnage selectionné
 	private int i_potion = 0; //indice potion selectionné
@@ -37,18 +37,18 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	
 	private JButton persoM = new JButton("\u25C0"); //fleche gauche selection perso
 	private JButton persoP = new JButton("\u25B6"); //fleche droite selection perso
-	private JButton launchPerso = new JButton("Déployer"); //déploiement perso
+	private JButton launchPerso = new JButton("Deployer"); //déploiement perso
 	private JButton potionM = new JButton("\u25C0"); //fleche gauche selection potion
 	private JButton potionP = new JButton("\u25B6"); //fleche gauche selection potion
-	private JButton launchPotion = new JButton("Déployer"); //deploiement potion
+	private JButton launchPotion = new JButton("Deployer"); //deploiement potion
 	private JButton launchAreneIHM;
 	
 	private JLabel persoLabel; //label nom perso
 	private JLabel potionLabel; //label nom potion
-	private JLabel lanceurLabel = new JLabel("Lanceur Arène & IHM");
+	private JLabel lanceurLabel = new JLabel("Lanceur Arene & IHM");
 	private JLabel messageLabel; //label message
 	
-	private boolean estLance = false; //arène et IHM lancé?
+	private boolean estLance = false; //arene et IHM lancé?
 
 	@SuppressWarnings("unused")
 	private ThreadArene areneThread = null; //thread pour l'arene
@@ -93,7 +93,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		//  Lancement Persos  \\
 		this.persoLabel = new JLabel(classesPerso[this.i_perso], JLabel.CENTER);
 		this.persoLabel.setPreferredSize(new Dimension(100, 50));
-		//Visibilité des bouttons
+		//Visibilite des boutons
 		if (this.i_perso == 0) {
 			this.persoM.setEnabled(false);
 		}
@@ -180,7 +180,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 			}
 			else {
 				new ThreadPerso(classesPerso[this.i_perso]);
-				this.message = classesPerso[this.i_perso] + " déployé.";
+				this.message = classesPerso[this.i_perso] + " deploye.";
 			}
 		}
 		////////////////////////////
@@ -198,7 +198,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 			}
 			else {
 				new ThreadPotion(classesPotion[this.i_potion]);
-				this.message = "Potion " + classesPotion[this.i_potion] + " déployée";
+				this.message = "Potion " + classesPotion[this.i_potion] + " deploye";
 			}
 		}
 		////////////////////////////
@@ -215,7 +215,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 				//puis on lance l'IHM
 				this.IHMThread = new ThreadIHM();
 				this.estLance = true;
-				this.message = "Arène et IHM lancés.";
+				this.message = "Arene et IHM lances.";
 			}
 			else {
 				//sinon on quitte tout
