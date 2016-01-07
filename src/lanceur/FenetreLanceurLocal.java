@@ -30,14 +30,14 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	public static String[] classesPerso = {"Personnage", "Assassin", "Brute", "Cavalier", "Chimiste", "Grenadier", "Sniper"};
 	public static String[] classesPotion = {"Potion", "Arsenic", "Carapace", "Cola", "Gel", "Rage", "Soin", "Vortex", "7Lieues"};
 	
-	private int i_perso = 0; //indice personnage selectionné
-	private int i_potion = 0; //indice potion selectionné
+	private int i_perso = 0; //indice personnage selectionne
+	private int i_potion = 0; //indice potion selectionne
 	
 	private String message = new String(""); //message d'information
 	
 	private JButton persoM = new JButton("\u25C0"); //fleche gauche selection perso
 	private JButton persoP = new JButton("\u25B6"); //fleche droite selection perso
-	private JButton launchPerso = new JButton("Deployer"); //déploiement perso
+	private JButton launchPerso = new JButton("Deployer"); //deploiement perso
 	private JButton potionM = new JButton("\u25C0"); //fleche gauche selection potion
 	private JButton potionP = new JButton("\u25B6"); //fleche gauche selection potion
 	private JButton launchPotion = new JButton("Deployer"); //deploiement potion
@@ -48,7 +48,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	private JLabel lanceurLabel = new JLabel("Lanceur Arene & IHM");
 	private JLabel messageLabel; //label message
 	
-	private boolean estLance = false; //arene et IHM lancé?
+	private boolean estLance = false; //arene et IHM lances
 
 	@SuppressWarnings("unused")
 	private ThreadArene areneThread = null; //thread pour l'arene
@@ -71,7 +71,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		this.lanceurLabel.setPreferredSize(new Dimension(260, 25));
 		this.panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 15));
 		
-		//création fenêtre
+		//creation fenetre
 		this.setTitle("Lanceur Persos/Potions - Version Locale");
 		this.setSize(400, 290);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -115,7 +115,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		//  Lancement Potions  \\
 		this.potionLabel = new JLabel(classesPotion[this.i_potion], JLabel.CENTER);
 		this.potionLabel.setPreferredSize(new Dimension(100, 50));	
-		//Visibilite des bouttons
+		//Visibilite des boutons
 		if (this.i_potion == 0) {
 			this.potionM.setEnabled(false);
 		}
@@ -162,7 +162,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 	
 	/**
 	 * LISTENER
-	 * définit les actions lors d'appuis sur les bouttons
+	 * definit les actions lors d'appuis sur les bouttons
 	 */
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
@@ -204,10 +204,10 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 		////////////////////////////
 		else if (source == this.launchAreneIHM) {
 			if (!this.estLance) {
-				//si pas lancé on lance l'arene
+				//si pas lance on lance l'arene
 				this.areneThread = new ThreadArene();
 				try {
-					//on attend 1 sec pour être sûr que l'arène s'est lancée
+					//on attend 1 sec pour etre sur que l'arene s'est lancee
 					Thread.sleep(1000);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
