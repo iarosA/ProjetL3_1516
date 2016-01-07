@@ -34,6 +34,7 @@ public class LancePersonnage {
 		// si negatif, illimite
 		int nbTours = Constantes.NB_TOURS_PERSONNAGE_DEFAUT;
 		
+		//indice du nom de personnage dans les arguments
 		int i_persoArgs = 0;
 		
 		// init des arguments
@@ -91,17 +92,18 @@ public class LancePersonnage {
 			
 			// caracteristiques du personnage
 			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			// seule la force n'a pas sa valeur par defaut (exemple)
+			// seule la force n'a pas sa valeur par defaut (pour Personnage)
 			caracts.put(Caracteristique.FORCE, 
 					Calculs.valeurCaracAleatoire(Caracteristique.FORCE)); 
 			
+			//Par defaut on lance un potion aleatoire
 			Point position = Calculs.positionAleatoireArene();
 			if (i_persoArgs == -1) {
 				new StrategiePersonnage(ipArene, port, ipConsole, "Pesonnage", groupe, caracts, nbTours, position, logger);
 				logger.info("Lanceur", "Creation d'un personnage reussie");
 			}
 			else {
-			
+				//Sinon on lance la potion passee en argument
 				if (args[i_persoArgs].equals("Assassin")) {
 					new StrategieAssassin(ipArene, port, ipConsole, "Assassin", groupe, caracts, nbTours, position, logger);
 					logger.info("Lanceur", "Creation d'un assassin reussie");
@@ -131,9 +133,7 @@ public class LancePersonnage {
 					logger.info("Lanceur", "Creation d'un personnage reussie");
 				}
 			}
-			
-			
-			
+					
 		} catch (Exception e) {
 			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
 			e.printStackTrace();

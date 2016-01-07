@@ -6,6 +6,11 @@ import java.util.HashMap;
 
 public interface IStrategie {
 
+	/**
+	 * 
+	 * @param voisins
+	 * @throws RemoteException
+	 */
 	public void executeStrategie(HashMap<Integer, Point> voisins) throws RemoteException;
 	
 }
