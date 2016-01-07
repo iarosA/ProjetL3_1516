@@ -139,7 +139,7 @@ public class FenetreLanceurLocal extends JFrame implements ActionListener {
 			this.launchAreneIHM = new JButton("Lancer");
 		}
 		else {
-			this.launchAreneIHM = new JButton("Arrêter");
+			this.launchAreneIHM = new JButton("Arreter");
 		}
 		this.launchAreneIHM.addActionListener(this);
 		//Panel

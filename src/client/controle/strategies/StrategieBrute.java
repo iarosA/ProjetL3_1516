@@ -12,7 +12,6 @@ import serveur.element.Element;
 import serveur.element.personnages.Brute;
 import serveur.element.personnages.Personnage;
 import serveur.element.potions.Potion;
-import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -26,8 +25,6 @@ public class StrategieBrute implements IStrategie{
 	
 	protected int nbTours_paralysie = 0;
 	
-	protected boolean invincibiliteDeclenchee = false;
-	protected boolean invincibiliteTerminee = false;
 
 	/**
 	 * Cree un personnage, la console associe et sa strategie.
@@ -86,15 +83,7 @@ public class StrategieBrute implements IStrategie{
 				} catch (RemoteException e) {
 					e.printStackTrace();
 				}
-				
-				//si vie inferieure a 20, declenchement de l'invincibilite
-				if(!this.invincibiliteDeclenchee && console.getPersonnage().getCaract(Caracteristique.VIE) <= 20) {
-					console.setPhrase("Je declenche mon invincibilite");
-					arene.invincibilite((VuePersonnage) arene.vueFromRef(refRMI));
-					this.invincibiliteDeclenchee = true;
-				}
-				
-				
+								
 				if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 					console.setPhrase("J'erre...");
 					arene.deplace(refRMI, 0, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT)); 
@@ -104,8 +93,14 @@ public class StrategieBrute implements IStrategie{
 					int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
 
 					Element elemPlusProche = arene.elementFromRef(refCible);
-
-					if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
+					
+					if (this.nbTours_paralysie == 0 && distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION + 1
+							&& elemPlusProche instanceof Personnage ){
+						this.nbTours_paralysie = 1;
+						console.setPhrase("Je paralyse " + elemPlusProche.getNom());
+						arene.lanceAttaqueParalysante(refRMI, refCible);//attaque paralysante
+					}
+					else if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
 																				// j'interagis directement
 						if(elemPlusProche instanceof Potion) { // potion
 							// ramassage
@@ -113,16 +108,11 @@ public class StrategieBrute implements IStrategie{
 							arene.ramassePotion(refRMI, refCible);
 
 						} else { // personnage
-							if (this.nbTours_paralysie == 0) {
-								this.nbTours_paralysie = 1;
-								console.setPhrase("Je paralyse " + elemPlusProche.getNom());
-								arene.lanceAttaqueParalysante(refRMI, refCible);//attaque paralysante
-							}
-							else {
-								// duel
-								console.setPhrase("Je marave " + elemPlusProche.getNom());
-								arene.lanceAttaque(refRMI, refCible, true);
-							}
+							
+							// duel
+							console.setPhrase("Je marave " + elemPlusProche.getNom());
+							arene.lanceAttaque(refRMI, refCible, true);
+
 						}	
 					} else { // si voisins, mais plus eloignes
 						// je vais vers le plus proche
@@ -137,13 +127,7 @@ public class StrategieBrute implements IStrategie{
 					}
 					else this.nbTours_paralysie++;
 				}
-				if(this.invincibiliteDeclenchee && !this.invincibiliteTerminee)
-				{
-					Personnage p = (Personnage)arene.elementFromRef(refRMI);
-					if (p.getNbToursInvincibilite() == 0) {
-						this.invincibiliteTerminee = true;
-					}
-				}
+				
 				arene.subirBrulure(refRMI);
 				arene.subirParalysie(refRMI);
 				arene.subirInvincibilite(refRMI);

@@ -824,7 +824,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 					personnages.get(refRMIAdv).getPosition());
 
 			// on teste la distance entre les personnages
-			if (distance <= Constantes.DISTANCE_MIN_INTERACTION) {
+			if (distance <= Constantes.DISTANCE_MIN_INTERACTION+1) {
 				Personnage pers = (Personnage) elementFromRef(refRMI);
 				Personnage persAdv = (Personnage) elementFromRef(refRMIAdv);
 				
@@ -1185,7 +1185,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		
 		int refRMI = vuePersonnage.getRefRMI();
 		IConsole console = consoleFromRef(refRMI);
-		Personnage pers = (Personnage)vuePersonnage.getElement();
+		Personnage pers = vuePersonnage.getElement();
 		
 		// increment de la caracteristique
 		pers.invincibilite();
