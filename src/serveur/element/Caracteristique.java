@@ -17,14 +17,12 @@ public enum Caracteristique {
 	 * Force : indique les degats infliges. 
 	 */
 	FORCE("Force", "FOR", 0, 100, 1),
-	
 
 	/**
 	 *Defense : reduit les degats subis de val pourcent. 
 	 * 
 	 */
 	DEFENSE("Defense", "DEF", 0, 100, 0),
-	
 	
 	/**
 	 * Initiative : definit l'ordre d'action des personnages lors d'un tour de jeu. 
