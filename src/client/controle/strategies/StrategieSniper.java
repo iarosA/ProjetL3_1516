@@ -54,14 +54,14 @@ public class StrategieSniper implements IStrategie{
 		}
 	}
 
-	// TODO etablir une strategie afin d'evoluer dans l'arene de combat
-	// une proposition de strategie (simple) est donnee ci-dessous
+	
 	/** 
-	 * Decrit la strategie.
+	 * Peut sniper (attaque a distance qui prend pas en compte la def) dans le champ de vision tous les 5 tours
+	 * Attaque au corps a corps (duel) sinon
+	 * 
+	 * 
 	 * Les methodes pour evoluer dans le jeu doivent etre les methodes RMI
 	 * de Arene et de ConsolePersonnage.
-	 * - peut sniper (attaque a distance qui prend pas en compte la def dans le champ de vision) tous les 5 tours
-	 * - attaque au corps a corps (duel) sinon
 	 * @param voisins element voisins de cet element (elements qu'il voit)
 	 * @throws RemoteException
 	 */
@@ -86,44 +86,43 @@ public class StrategieSniper implements IStrategie{
 			console.setPhrase("J'erre...");
 			arene.deplace(refRMI, 0, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT)); 
 			
-		} else {
+		} else {				//s'il y a des voisins
 			int refCible = Calculs.chercheElementProche(position, voisins);
 			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
 
 			Element elemPlusProche = arene.elementFromRef(refCible);
 
-			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
+			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches pour un duel
 				// j'interagis directement
 				if(elemPlusProche instanceof Potion) { // potion
-					// ramassage
+														// ramassage
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);
 
-				} else { // personnage
-					if (this.nbTours_snipe == 0) {
+				} else { 								// personnage
+					if (this.nbTours_snipe == 0) {		// si le sniper est charge
 						this.nbTours_snipe = 1;
 						console.setPhrase("Je snipe " + elemPlusProche.getNom());
 						arene.lanceAttaqueADist(refRMI, refCible, false);//attaque transpercante
 					}
-					else {
+					else {								//sinon attaque au couteau (duel)
 						// duel
 						console.setPhrase("Je fais un duel au couteau avec " + elemPlusProche.getNom());
 						arene.lanceAttaque(refRMI, refCible, true);
 					}
 				}
 			} else if (this.nbTours_snipe == 0 && elemPlusProche instanceof Personnage) {
-
-				this.nbTours_snipe = 1;
+				this.nbTours_snipe = 1;							//si le sniper est charge
 				console.setPhrase("Je snipe " + elemPlusProche.getNom());
 				arene.lanceAttaqueADist(refRMI, refCible, false);//attaque transpercante
 					
-			} else { // si voisins, mais plus eloignes
+			} else { // si voisins, mais plus eloignes (et que sniper pas charge)
 				// je vais vers le plus proche
 				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 				arene.deplace(refRMI, refCible, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT));
 			}
 		}
-		if (this.nbTours_snipe > 0) {
+		if (this.nbTours_snipe > 0) {			//compter recharge sniper
 			if (this.nbTours_snipe == 5) {
 				this.nbTours_snipe = 0;
 				console.setPhrase("Je peux sniper a nouveau");

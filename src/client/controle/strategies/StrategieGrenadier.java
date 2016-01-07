@@ -54,16 +54,14 @@ public class StrategieGrenadier implements IStrategie{
 		}
 	}
 
-	// TODO etablir une strategie afin d'evoluer dans l'arene de combat
-	// une proposition de strategie (simple) est donnee ci-dessous
+	
 	/** 
-	 * Decrit la strategie.
-	 * Les methodes pour evoluer dans le jeu doivent etre les methodes RMI
-	 * de Arene et de ConsolePersonnage. 
-	 * 
 	 * Le grenadier attaque au lance flamme lorsque l'adversaire est a moins de DISTANCE_MIN_INTERACTION * 3
 	 * si le personnage est a moins de DISTANCE_MIN_INTERACTION * 5, il lance une attaque a distance.
 	 * 
+	 * Les methodes pour evoluer dans le jeu doivent etre les methodes RMI
+	 * de Arene et de ConsolePersonnage. 
+	 *
 	 * @param voisins element voisins de cet element (elements qu'il voit)
 	 * @throws RemoteException
 	 */

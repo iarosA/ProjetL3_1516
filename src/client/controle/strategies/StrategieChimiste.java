@@ -53,7 +53,9 @@ public class StrategieChimiste implements IStrategie{
 	}
 
 	/** 
-	 * Decrit la strategie.
+	 * Le chimiste n'est pas un personnage a part entiere, on le lance dans l'arene avec peu de vie, pas de defense
+	 * il a la capacite de teleporter, et il pose une potion a chaque fois qu'il se teleporte.
+	 * 
 	 * Les methodes pour evoluer dans le jeu doivent etre les methodes RMI
 	 * de Arene et de ConsolePersonnage. 
 	 * @param voisins element voisins de cet element (elements qu'il voit)
@@ -75,10 +77,10 @@ public class StrategieChimiste implements IStrategie{
 			e.printStackTrace();
 		}
 		
-		arene.teleport(refRMI, 0);
+		arene.teleport(refRMI, 0);									//il se teleporte
 		console.setPhrase("Je me teleporte");
 		
-		int choixPotion = Calculs.nombreAleatoire(1, 3);
+		int choixPotion = Calculs.nombreAleatoire(1, 3);			//choisit une potion
 		switch (choixPotion) {
 		case 1: console.setPhrase("Je depose du poison");
 				break;
@@ -98,7 +100,7 @@ public class StrategieChimiste implements IStrategie{
 		
 		position = arene.getPosition(refRMI);
 		
-		new ThreadChimiste(arene, choixPotion, position);
+		new ThreadChimiste(arene, choixPotion, position);			//et la pose
 	}
 
 	private class ThreadChimiste extends Thread {

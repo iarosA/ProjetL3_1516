@@ -16,7 +16,7 @@ import utilitaires.Calculs;
 import utilitaires.Constantes;
 
 /**
- * Strategie d'un personnage. 
+ * Strategie d'un personnage generique, le classique, la base de tous les autres personnages.
  */
 public class StrategiePersonnage implements IStrategie{
 	
