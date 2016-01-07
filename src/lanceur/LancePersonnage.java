@@ -61,10 +61,12 @@ public class LancePersonnage {
 						ipArene = args[1];
 					else i_persoArgs = 1;
 				}
-				if (args.length > 2) {
-					i_persoArgs = 2;
+				else {
+					if (args.length > 2) {
+						i_persoArgs = 2;
+					}
+					else i_persoArgs = -1;
 				}
-				else i_persoArgs = -1;
 			}
 		}
 		else {
@@ -125,7 +127,7 @@ public class LancePersonnage {
 					logger.info("Lanceur", "Creation d'un sniper reussie");
 				}
 				else if (args[i_persoArgs].equals("Personnage")){
-					new StrategiePersonnage(ipArene, port, ipConsole, "Pesonnage", groupe, caracts, nbTours, position, logger);
+					new StrategiePersonnage(ipArene, port, ipConsole, "Personnage", groupe, caracts, nbTours, position, logger);
 					logger.info("Lanceur", "Creation d'un personnage reussie");
 				}
 			}
