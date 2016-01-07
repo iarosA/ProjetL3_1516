@@ -12,14 +12,14 @@ public class PotionParalysie extends Potion {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Constructeur d'une potion avec un nom, le groupe qui l'a envoyee et ses 
-	 * caracteristiques (ajoutees lorsqu'un Personnage ramasse cette potion).
+	 * Constructeur d'une potion avec un nom, le groupe
+	 * Paralyse NB_TOURS_PARALYSIE tours par effet
 	 * @param nom nom de la potion
 	 * @param groupe groupe d'etudiants de la potion
 	 * @param caracts caracteristiques de la potion
 	 */
-	public PotionParalysie(String nom, String groupe, HashMap<Caracteristique, Integer> caracts) {
-		super(nom, groupe, caracts);
+	public PotionParalysie(String nom, String groupe) {
+		super(nom, groupe, new HashMap<Caracteristique, Integer>());
 		this.caracts.put(Caracteristique.VIE, 0);
 		this.caracts.put(Caracteristique.FORCE, 0);
 		this.caracts.put(Caracteristique.INITIATIVE, 0);
