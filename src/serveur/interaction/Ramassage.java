@@ -43,6 +43,8 @@ public class Ramassage extends Interaction<VuePotion> {
 				
 				Element potion = defenseur.getElement();
 				
+				
+				//On teste si c'est une potion a effet
 				if (potion instanceof PotionDeplacement) {
 					arene.deplacemenAccru(attaquant);
 				}
@@ -58,7 +60,7 @@ public class Ramassage extends Interaction<VuePotion> {
 				else if (potion instanceof PotionParalysie) {
 					arene.paralysie(attaquant);
 				}
-				else {
+				else { //sinon potion a caracteristique
 
 					// caracteristiques de la potion
 					HashMap<Caracteristique, Integer> valeursPotion = defenseur.getElement().getCaracts();
