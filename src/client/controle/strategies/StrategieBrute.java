@@ -23,10 +23,11 @@ public class StrategieBrute implements IStrategie{
 	 */
 	protected Console console;
 	
-	protected int nbTours_paralysie = 0;
+	protected int nbTours_paralysie = 0;		//pour le compteur de l'attaque paralysante
 	
 
 	/**
+	 * 
 	 * Cree un personnage, la console associe et sa strategie.
 	 * @param ipArene ip de communication avec l'arene
 	 * @param port port de communication avec l'arene
@@ -58,9 +59,12 @@ public class StrategieBrute implements IStrategie{
 	
 	/** 
 	 * Decrit la strategie.
+	 *
+	 * La brute tape FORT ! Tellement fort qu'elle paralyse son adversaire une fois sur 5
+	 * elle se deplace de 1 et elle a 90 de DEF
+	 * son attaque paralysante a une portee de DIST_MIN_INTERACTION+1
+	 * et l'attaque normale a une portee de DIST_MIN_INTERACTION.
 	 * 
-	 * La brute peut lancer une attaque paralysante une fois tous les 5 tours
-	 * et lorsque sa vie descend a moins de 20 points, il devient invincible pendant NB_TOURS_INVINCIBILITE/2
 	 *  
 	 * Les methodes pour evoluer dans le jeu doivent etre les methodes RMI
 	 * de Arene et de ConsolePersonnage. 
@@ -93,7 +97,7 @@ public class StrategieBrute implements IStrategie{
 					int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
 
 					Element elemPlusProche = arene.elementFromRef(refCible);
-					
+					//si un elem est a portee de l'att paralysante, que l'att est disponible, et que c'est un personnage
 					if (this.nbTours_paralysie == 0 && distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION + 1
 							&& elemPlusProche instanceof Personnage ){
 						this.nbTours_paralysie = 1;
@@ -120,7 +124,7 @@ public class StrategieBrute implements IStrategie{
 						arene.deplace(refRMI, refCible, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT));
 					}
 				}
-				if (this.nbTours_paralysie > 0) {
+				if (this.nbTours_paralysie > 0) {			//Compteur attaque paralysante
 					if (this.nbTours_paralysie == 5) {
 						this.nbTours_paralysie = 0;
 						console.setPhrase("Je peux paralyser a nouveau");
