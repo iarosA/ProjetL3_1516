@@ -123,7 +123,7 @@ public class StrategieChimiste implements IStrategie{
 					arene.ajoutePotion(new PotionPoison("Arsenic", "Chimiste", new HashMap<Caracteristique, Integer>()), position);
 					break;
 				case 2:
-					arene.ajoutePotion(new PotionParalysie("Ketamine", "Chimiste", new HashMap<Caracteristique, Integer>()), position);
+					arene.ajoutePotion(new PotionParalysie("Gel", "Chimiste", new HashMap<Caracteristique, Integer>()), position);
 					break;
 				case 3:
 					arene.ajoutePotion(new PotionTeleportation("Vortex", "Chimiste", new HashMap<Caracteristique, Integer>()), position);
