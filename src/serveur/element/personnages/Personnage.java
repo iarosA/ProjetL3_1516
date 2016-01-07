@@ -32,7 +32,7 @@ public class Personnage extends Element {
 	
 	
 	/**
-	 * Cree un personnage avec un nom et un groupe.
+	 * Cree un personnage de base avec un nom et un groupe.
 	 * @param nom du personnage
 	 * @param groupe d'etudiants du personnage
 	 * @param caracts caracteristiques du personnage

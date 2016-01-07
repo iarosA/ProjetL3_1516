@@ -9,7 +9,7 @@ public class Sniper extends Personnage {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Cree un personnage avec un nom et un groupe.
+	 * Cree un personnage Sniper avec un nom et un groupe.
 	 * @param nom du personnage
 	 * @param groupe d'etudiants du personnage
 	 * @param caracts caracteristiques du personnage
