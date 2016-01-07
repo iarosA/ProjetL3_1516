@@ -104,11 +104,10 @@ public class StrategieAssassin implements IStrategie{
 				
 			} else { // si voisins, mais plus eloignes
 					// je vais vers le plus proche
-				if(nbTours_Teleport == 0 && elemPlusProche instanceof Personnage
-						&& console.getPersonnage().getNbToursParalysie() == 0)
-				{
-									//lorque l'adversaire est hors de portee et que la 
-									//teleportation a fini de charger, l'assassin se teleporte
+				if(nbTours_Teleport == 0 && elemPlusProche instanceof Personnage //si c'est un personnage et que la 
+						&& console.getPersonnage().getNbToursParalysie() == 0)	//teleport a charge et qu'il n'est pas
+				{																//paralyse
+									//l'assassin se teleporte
 									//et effectue une attaque simultanement ne prenant pas en compte la defense
 									//de l'adversaire.
 					console.setPhrase("Je me deplace furtivement dans le dos de" + elemPlusProche.getNom());
@@ -118,7 +117,7 @@ public class StrategieAssassin implements IStrategie{
 					this.nbTours_Teleport = 1;
 				}
 				else
-				{
+				{																//sinon on se deplace normalement
 					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible, console.getPersonnage().getCaract(Caracteristique.DEPLACEMENT));
 				}
@@ -127,7 +126,7 @@ public class StrategieAssassin implements IStrategie{
 		}
 		if(nbTours_Teleport > 0)			//gestion du compteur de teleportation
 		{									//il s'incremente au fil des tours
-			if(nbTours_Teleport==4)			//lorsqu'il est a 0 il le reste
+			if(nbTours_Teleport==4)			//lorsqu'il est a 0 il le reste et on peut se teleporter
 				nbTours_Teleport = 0;
 			else
 				nbTours_Teleport++;
