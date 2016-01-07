@@ -57,6 +57,7 @@ public class LancePotion {
 				if (args.length > 2) {
 					i_potionArgs = 2;
 				}
+				else i_potionArgs = -1;
 			}
 		}
 		else {
@@ -87,43 +88,48 @@ public class LancePotion {
 			caractsPotion.put(Caracteristique.INITIATIVE, Calculs.valeurCaracAleatoirePosNeg(Caracteristique.INITIATIVE));
 			
 			Point position = Calculs.positionAleatoireArene();
-			
-			// ajout de la potion
-			if (args[i_potionArgs].equals("Soin")) {
-				arene.ajoutePotion(new PotionVie("Soin", groupe, caractsPotion), position);
-				logger.info("Lanceur", "Lancement de la potion soin reussi");
-			}
-			else if (args[i_potionArgs].equals("Rage")) {
-				arene.ajoutePotion(new PotionForce("Rage", groupe, caractsPotion), position);
-				logger.info("Lanceur", "Lancement de la potion rage reussi");
-			}
-			else if (args[i_potionArgs].equals("Cola")) {
-				arene.ajoutePotion(new PotionInitiative("Cola", groupe, caractsPotion), position);
-				logger.info("Lanceur", "Lancement de la potion cola reussi");
-			}
-			else if (args[i_potionArgs].equals("7Lieues")) {
-				arene.ajoutePotion(new PotionDeplacement("7Lieues", groupe, caractsPotion), position);
-				logger.info("Lanceur", "Lancement de la potion 7lieues reussi");
-			}
-			else if (args[i_potionArgs].equals("Gel")) {
-				arene.ajoutePotion(new PotionParalysie("Gel", groupe, caractsPotion), position);
-				logger.info("Lanceur", "Lancement de la potion gel reussi");
-			}
-			else if (args[i_potionArgs].equals("Arsenic")) {
-				arene.ajoutePotion(new PotionPoison("Arsenic", groupe, caractsPotion), position);
-				logger.info("Lanceur", "Lancement de la potion arsenic reussi");
-			}
-			else if (args[i_potionArgs].equals("Vortex")) {
-				arene.ajoutePotion(new PotionTeleportation("Vortex", groupe, caractsPotion), position);
-				logger.info("Lanceur", "Lancement de la potion vortex reussi");
-			}
-			else if (args[i_potionArgs].equals("Carapace")) {
-				arene.ajoutePotion(new PotionInvincibilite("Carapace", groupe, caractsPotion), position);
-				logger.info("Lanceur", "Lancement de la potion carapace reussi");
-			}
-			else if (args[i_potionArgs].equals("Potion")) {
+			if (i_potionArgs == -1) {
 				arene.ajoutePotion(new Potion("Potion", groupe, caractsPotion), position);
 				logger.info("Lanceur", "Lancement de la potion reussi");
+			}
+			else {
+				// ajout de la potion
+				if (args[i_potionArgs].equals("Soin")) {
+					arene.ajoutePotion(new PotionVie("Soin", groupe, caractsPotion), position);
+					logger.info("Lanceur", "Lancement de la potion soin reussi");
+				}
+				else if (args[i_potionArgs].equals("Rage")) {
+					arene.ajoutePotion(new PotionForce("Rage", groupe, caractsPotion), position);
+					logger.info("Lanceur", "Lancement de la potion rage reussi");
+				}
+				else if (args[i_potionArgs].equals("Cola")) {
+					arene.ajoutePotion(new PotionInitiative("Cola", groupe, caractsPotion), position);
+					logger.info("Lanceur", "Lancement de la potion cola reussi");
+				}
+				else if (args[i_potionArgs].equals("7Lieues")) {
+					arene.ajoutePotion(new PotionDeplacement("7Lieues", groupe, caractsPotion), position);
+					logger.info("Lanceur", "Lancement de la potion 7lieues reussi");
+				}
+				else if (args[i_potionArgs].equals("Gel")) {
+					arene.ajoutePotion(new PotionParalysie("Gel", groupe, caractsPotion), position);
+					logger.info("Lanceur", "Lancement de la potion gel reussi");
+				}
+				else if (args[i_potionArgs].equals("Arsenic")) {
+					arene.ajoutePotion(new PotionPoison("Arsenic", groupe, caractsPotion), position);
+					logger.info("Lanceur", "Lancement de la potion arsenic reussi");
+				}
+				else if (args[i_potionArgs].equals("Vortex")) {
+					arene.ajoutePotion(new PotionTeleportation("Vortex", groupe, caractsPotion), position);
+					logger.info("Lanceur", "Lancement de la potion vortex reussi");
+				}
+				else if (args[i_potionArgs].equals("Carapace")) {
+					arene.ajoutePotion(new PotionInvincibilite("Carapace", groupe, caractsPotion), position);
+					logger.info("Lanceur", "Lancement de la potion carapace reussi");
+				}
+				else if (args[i_potionArgs].equals("Potion")) {
+					arene.ajoutePotion(new Potion("Potion", groupe, caractsPotion), position);
+					logger.info("Lanceur", "Lancement de la potion reussi");
+				}
 			}
 			
 		} catch (Exception e) {

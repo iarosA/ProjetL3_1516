@@ -17,7 +17,7 @@ public class Sniper extends Personnage {
 	public Sniper(String nom, String groupe, HashMap<Caracteristique, Integer> caracts) {
 		super(nom, groupe, caracts);
 		this.caracts.put(Caracteristique.VIE, 100);
-		this.caracts.put(Caracteristique.FORCE, 80);
+		this.caracts.put(Caracteristique.FORCE, 40);
 		this.caracts.put(Caracteristique.INITIATIVE, 10);
 		this.caracts.put(Caracteristique.DEFENSE, 20);
 		super.sauvegardeDefense = this.getCaract(Caracteristique.DEFENSE);

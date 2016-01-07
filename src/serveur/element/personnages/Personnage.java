@@ -94,8 +94,9 @@ public class Personnage extends Element {
 	
 	public void invincibilite() {
 		this.nbToursInvincibilite = 1;
-		if (getCaract(Caracteristique.DEFENSE) != 100)
+		if (getCaract(Caracteristique.DEFENSE) < 100)
 		{
+			System.out.println("ok");
 			this.sauvegardeDefense = getCaract(Caracteristique.DEFENSE);
 			caracts.put(Caracteristique.DEFENSE, 100);
 		}

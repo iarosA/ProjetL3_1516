@@ -64,6 +64,7 @@ public class LancePersonnage {
 				if (args.length > 2) {
 					i_persoArgs = 2;
 				}
+				else i_persoArgs = -1;
 			}
 		}
 		else {
@@ -93,34 +94,40 @@ public class LancePersonnage {
 					Calculs.valeurCaracAleatoire(Caracteristique.FORCE)); 
 			
 			Point position = Calculs.positionAleatoireArene();
-			
-			if (args[i_persoArgs].equals("Assassin")) {
-				new StrategieAssassin(ipArene, port, ipConsole, "Assassin", groupe, caracts, nbTours, position, logger);
-				logger.info("Lanceur", "Creation d'un assassin reussie");
-			}
-			else if (args[i_persoArgs].equals("Brute")) {
-				new StrategieBrute(ipArene, port, ipConsole, "Brute", groupe, caracts, nbTours, position, logger);
-				logger.info("Lanceur", "Creation d'une brute reussie");
-			}
-			else if (args[i_persoArgs].equals("Cavalier")) {
-				new StrategieCavalier(ipArene, port, ipConsole, "Cavalier", groupe, caracts, nbTours, position, logger);
-				logger.info("Lanceur", "Creation d'un cavalier reussie");
-			}
-			else if (args[i_persoArgs].equals("Chimiste")) {
-				new StrategieChimiste(ipArene, port, ipConsole, "Chimiste", groupe, caracts, nbTours, position, logger);
-				logger.info("Lanceur", "Creation d'un chimiste reussie");
-			}
-			else if (args[i_persoArgs].equals("Grenadier")) {
-				new StrategieGrenadier(ipArene, port, ipConsole, "Grenadier", groupe, caracts, nbTours, position, logger);
-				logger.info("Lanceur", "Creation d'un grenadier reussie");
-			}
-			else if (args[i_persoArgs].equals("Sniper")) {
-				new StrategieSniper(ipArene, port, ipConsole, "Sniper", groupe, caracts, nbTours, position, logger);
-				logger.info("Lanceur", "Creation d'un sniper reussie");
-			}
-			else if (args[i_persoArgs].equals("Personnage")){
+			if (i_persoArgs == -1) {
 				new StrategiePersonnage(ipArene, port, ipConsole, "Pesonnage", groupe, caracts, nbTours, position, logger);
 				logger.info("Lanceur", "Creation d'un personnage reussie");
+			}
+			else {
+			
+				if (args[i_persoArgs].equals("Assassin")) {
+					new StrategieAssassin(ipArene, port, ipConsole, "Assassin", groupe, caracts, nbTours, position, logger);
+					logger.info("Lanceur", "Creation d'un assassin reussie");
+				}
+				else if (args[i_persoArgs].equals("Brute")) {
+					new StrategieBrute(ipArene, port, ipConsole, "Brute", groupe, caracts, nbTours, position, logger);
+					logger.info("Lanceur", "Creation d'une brute reussie");
+				}
+				else if (args[i_persoArgs].equals("Cavalier")) {
+					new StrategieCavalier(ipArene, port, ipConsole, "Cavalier", groupe, caracts, nbTours, position, logger);
+					logger.info("Lanceur", "Creation d'un cavalier reussie");
+				}
+				else if (args[i_persoArgs].equals("Chimiste")) {
+					new StrategieChimiste(ipArene, port, ipConsole, "Chimiste", groupe, caracts, nbTours, position, logger);
+					logger.info("Lanceur", "Creation d'un chimiste reussie");
+				}
+				else if (args[i_persoArgs].equals("Grenadier")) {
+					new StrategieGrenadier(ipArene, port, ipConsole, "Grenadier", groupe, caracts, nbTours, position, logger);
+					logger.info("Lanceur", "Creation d'un grenadier reussie");
+				}
+				else if (args[i_persoArgs].equals("Sniper")) {
+					new StrategieSniper(ipArene, port, ipConsole, "Sniper", groupe, caracts, nbTours, position, logger);
+					logger.info("Lanceur", "Creation d'un sniper reussie");
+				}
+				else if (args[i_persoArgs].equals("Personnage")){
+					new StrategiePersonnage(ipArene, port, ipConsole, "Pesonnage", groupe, caracts, nbTours, position, logger);
+					logger.info("Lanceur", "Creation d'un personnage reussie");
+				}
 			}
 			
 			

@@ -88,9 +88,9 @@ public class StrategieBrute implements IStrategie{
 				}
 				
 				//si vie inferieure a 20, declenchement de l'invincibilite
-				if( !(this.invincibiliteDeclenchee) && console.getPersonnage().getCaract(Caracteristique.VIE) <= 20){
+				if(!this.invincibiliteDeclenchee && console.getPersonnage().getCaract(Caracteristique.VIE) <= 20) {
 					console.setPhrase("Je declenche mon invincibilite");
-					arene.invincibilite((VuePersonnage)arene.vueFromRef(refRMI));
+					arene.invincibilite((VuePersonnage) arene.vueFromRef(refRMI));
 					this.invincibiliteDeclenchee = true;
 				}
 				
@@ -140,8 +140,9 @@ public class StrategieBrute implements IStrategie{
 				if(this.invincibiliteDeclenchee && !this.invincibiliteTerminee)
 				{
 					Personnage p = (Personnage)arene.elementFromRef(refRMI);
-					if(p.getNbToursInvincibilite()==Constantes.NB_TOURS_INVINCIBILITE/2)
-						p.setNbToursInvincibilite(Constantes.NB_TOURS_INVINCIBILITE);
+					if (p.getNbToursInvincibilite() == 0) {
+						this.invincibiliteTerminee = true;
+					}
 				}
 				arene.subirBrulure(refRMI);
 				arene.subirParalysie(refRMI);

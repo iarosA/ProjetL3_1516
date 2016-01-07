@@ -127,7 +127,7 @@ public class StrategieAssassin implements IStrategie{
 		}
 		if(nbTours_Teleport > 0)			//gestion du compteur de teleportation
 		{									//il s'incremente au fil des tours
-			if(nbTours_Teleport==5)			//lorsqu'il est a 0 il le reste
+			if(nbTours_Teleport==4)			//lorsqu'il est a 0 il le reste
 				nbTours_Teleport = 0;
 			else
 				nbTours_Teleport++;
