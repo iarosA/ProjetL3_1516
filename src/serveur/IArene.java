@@ -172,15 +172,42 @@ public interface IArene extends Remote {
 	 * n'est plus actif (mort)
 	 * @param refRMI reference RMI de l'attaquant, qui demande un duel
 	 * @param refAdv reference RMI du defenseur
+	 * @param avecDef true pour prendre en compte la defense, false sinon
 	 * @return vrai si l'action a bien eu lieu, faux sinon
 	 * @throws RemoteException
 	 */
 	public boolean lanceAttaque(int refRMI, int refAdv, boolean avecDef) throws RemoteException;
 	
+	/**
+	 * Lance une attaque paralysante qui immobilise NB_TOURS_PARALYSIE tours
+	 * @param refRMI reference RMI de l'attaquant, qui demande un duel
+	 * @param refRMIAdv reference RMI du defenseur
+	 * @return vrai si l'action a bien eu lieu, faux sinon
+	 * @throws RemoteException
+	 */
 	public boolean lanceAttaqueParalysante(int refRMI, int refRMIAdv) throws RemoteException;
 	
+	/**
+	 * Lance une attaque brulante qui brule NB_TOURS_BRULURE tours en plus des degats
+	 * @param refRMI reference RMI de l'attaquant, qui demande un duel
+	 * @param refRMIAdv reference RMI du defenseur
+	 * @return vrai si l'action a bien eu lieu, faux sinon
+	 * @throws RemoteException
+	 */
 	public boolean lanceAttaqueBrulante(int refRMI, int refRMIAdv) throws RemoteException;
 	
+	/**
+	 * Execute un duel a distance entre le personnage correspondant a la console donnee 
+	 * et l'adversaire correspondant a la reference RMI donnee.
+	 * Le duel echoue si une action a deja ete executee a ce tour par 
+	 * l'attaquant, si les personnages sont trop eloignes, si l'un des deux 
+	 * n'est plus actif (mort)
+	 * @param refRMI reference RMI de l'attaquant, qui demande un duel
+	 * @param refAdv reference RMI du defenseur
+	 * @param avecDef true pour prendre en compte la defense, false sinon
+	 * @return vrai si l'action a bien eu lieu, faux sinon
+	 * @throws RemoteException
+	 */
 	public boolean lanceAttaqueADist(int refRMI, int refRMIAdv, boolean avecDef) throws RemoteException;
 	
 	/**
@@ -208,37 +235,6 @@ public interface IArene extends Remote {
 	 */
 	public boolean deplace(int refRMI, Point objectif, int distance) throws RemoteException;
 	
-	
-
-	
-
-	/**************************************************************************
-	 * Specifique au tournoi.
-	 **************************************************************************/
-	
-	/**
-	 * Verifie le mot de passe administrateur. 
-	 * @param motDePasse mot de passe a verifier
-	 * @return true si le mot de passe est ok, false sinon
-	 * @throws RemoteException
-	 */
-	public boolean verifieMotDePasse(char[] motDePasse) throws RemoteException;
-
-	/**
-	 * Lance la partie.
-	 * @param motDePasse mot de passe administrateur
-	 * @throws RemoteException
-	 */
-	public void commencePartie(String motDePasse) throws RemoteException;
-
-	/**
-	 * Ejecte un joueur de la partie. 
-	 * @param refRMI personnage
-	 * @param motDePasse mot de passe administrateur
-	 * @throws RemoteException
-	 */
-	public void ejectePersonnage(int refRMI, String motDePasse) throws RemoteException;
-
 	/**
 	 * Ajoute une potion dans l'arene a n'importe quel moment en mode tournoi.
 	 * @param potion potion
@@ -326,5 +322,36 @@ public interface IArene extends Remote {
 	 * @param b action effectuee ou non
 	 */
 	void setActionExecutee(VuePersonnage vueP, boolean b) throws RemoteException;
+	
+
+	
+
+	/**************************************************************************
+	 * Specifique au tournoi.
+	 **************************************************************************/
+	
+	/**
+	 * Verifie le mot de passe administrateur. 
+	 * @param motDePasse mot de passe a verifier
+	 * @return true si le mot de passe est ok, false sinon
+	 * @throws RemoteException
+	 */
+	public boolean verifieMotDePasse(char[] motDePasse) throws RemoteException;
+
+	/**
+	 * Lance la partie.
+	 * @param motDePasse mot de passe administrateur
+	 * @throws RemoteException
+	 */
+	public void commencePartie(String motDePasse) throws RemoteException;
+
+	/**
+	 * Ejecte un joueur de la partie. 
+	 * @param refRMI personnage
+	 * @param motDePasse mot de passe administrateur
+	 * @throws RemoteException
+	 */
+	public void ejectePersonnage(int refRMI, String motDePasse) throws RemoteException;
+
 }
 
