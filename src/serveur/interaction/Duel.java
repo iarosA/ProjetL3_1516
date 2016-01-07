@@ -17,7 +17,7 @@ import utilitaires.Constantes;
  */
 public class Duel extends Interaction<VuePersonnage> {
 	
-	protected boolean avecDef;
+	protected boolean avecDef;			//booleen: si true on prend en compte l'effet de la defense de l'adversaire
 	/**
 	 * Cree une interaction de duel.
 	 * @param arene arene
@@ -32,16 +32,16 @@ public class Duel extends Interaction<VuePersonnage> {
 	@Override
 	public void interagit() {
 		try {
-			Personnage pAttaquant = attaquant.getElement();
+			Personnage pAttaquant = attaquant.getElement();						//init
 			int forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
 			Personnage pDefenseur = defenseur.getElement();
 			int perteVie;
 			int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);
-			if (avecDef) {
+			if (avecDef) {												//si on veut prendre en compte la defense
 				perteVie = forceAttaquant * (100 - defenseDefenseur) / 100;
 			}
 			else {
-				if (defenseDefenseur == 100) perteVie = 0;
+				if (defenseDefenseur == 100) perteVie = 0;			//s'il est immunise pas de perte de vie
 				else perteVie = forceAttaquant;
 			}
 		

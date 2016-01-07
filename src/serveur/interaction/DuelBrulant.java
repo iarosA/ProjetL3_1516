@@ -12,12 +12,14 @@ import utilitaires.Constantes;
 /**
  * Represente un duel entre deux personnages.
  * la victime est brulée pendant NB_TOURS_BRULURE
- * les degats seront de EFFET_BRULURE points par tour
+ * les degats a l'execution seront de FORCE/2 a l'execution de l'ataque brulante
+ * puis l'effet de la brulure infligera EFFET_BRULURE points de degats par tour
  */
 public class DuelBrulant extends Interaction<VuePersonnage> {
 	
 	/**
 	 * Cree une interaction de duel avec un effet de brulure de NB_TOURS_BRULURE tours.
+	 * 
 	 * @param arene arene
 	 * @param attaquant attaquant
 	 * @param defenseur defenseur
@@ -28,13 +30,10 @@ public class DuelBrulant extends Interaction<VuePersonnage> {
 	
 	
 	@Override
-	/**
-	 * 
-	 * 
-	 */
+	
 	public void interagit() {
 		try {
-			Personnage pAttaquant = attaquant.getElement();
+			Personnage pAttaquant = attaquant.getElement();								//init
 			int forceAttaquant = (int)(pAttaquant.getCaract(Caracteristique.FORCE)*0.5);// 1/2 d'att
 			Personnage pDefenseur = defenseur.getElement();
 			int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);

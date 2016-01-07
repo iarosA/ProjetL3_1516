@@ -12,7 +12,7 @@ import utilitaires.Constantes;
 public class DuelADistance extends Interaction<VuePersonnage>{
 	
 	
-	private boolean avecDef;
+	private boolean avecDef;			//booleen: si true on prend en compte l'effet de la defense de l'adversaire
 	/**
 	 * Cree une interaction de duel a distance
 	 * @param arene arene
@@ -29,15 +29,15 @@ public class DuelADistance extends Interaction<VuePersonnage>{
 	@Override
 	public void interagit() {
 		try {
-			Personnage pAttaquant = attaquant.getElement();
+			Personnage pAttaquant = attaquant.getElement();				//init
 			Personnage pDefenseur = defenseur.getElement();
 			int forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
 			int perteVie;
 			int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);
-			if (avecDef) {
+			if (avecDef) {							//si on veut prendre en compte la defense
 				perteVie = forceAttaquant * (100 - defenseDefenseur) / 100;
 			}
-			else {
+			else {									//s'il est immunise pas de perte de vie
 				if(defenseDefenseur == 100) {
 					perteVie = 0;
 				}

@@ -14,6 +14,9 @@ public class DuelParalysant extends Duel {
 	
 	/**
 	 * Cree une interaction de duel Paralysant pendant NB_TOURS_PARALYSIE tours.
+	 * les degats infliges a l'execution seront calcules de la maniere habituelle avec prise en compte de la DEFENSE
+	 * Avec projection de l'adversaire.
+	 * 
 	 * @param arene arene
 	 * @param attaquant attaquant
 	 * @param defenseur defenseur
@@ -25,10 +28,10 @@ public class DuelParalysant extends Duel {
 	@Override
 	public void interagit() {
 		try {
-			Personnage pAttaquant = attaquant.getElement();
+			Personnage pAttaquant = attaquant.getElement();						//init
 			int forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
 			Personnage pDefenseur = defenseur.getElement();
-			int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE);
+			int defenseDefenseur = pDefenseur.getCaract(Caracteristique.DEFENSE); //on prend en compte la Defense
 			int perteVie = forceAttaquant * (100 - defenseDefenseur) / 100;
 		
 			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
